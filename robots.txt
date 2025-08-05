@@ -1,2 +1,4 @@
 ﻿User-agent: *
 Allow: /
+
+Sitemap: https://VOTRE-USER.github.io/VOTRE-REPO/sitemap.xml
