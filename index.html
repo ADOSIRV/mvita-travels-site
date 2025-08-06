@@ -1,28 +1,14 @@
-﻿<!DOCTYPE html> <html lang="fr"> <head> <meta charset="utf-8" /> <meta name="viewport" content="width=device-width, initial-scale=1" /> <title>MVITA Travels - Transferts et excursions à Zanzibar</title> <meta name="description" content="MVITA Travels : transferts aéroport, taxi privé, excursions à Zanzibar. Réservez via WhatsApp rapidement."> <link rel="icon" type="image/png" href="assets/favicon.png" /> <link rel="preload" as="image" href="assets/cover.jpg" /> <style> :root{ --ocean:#16a085; --turquoise:#1abc9c; --spice:#2ecc71; --sand:#f6f1e9; --coral:#ff6b6b; --ink:#0f3d3e; --text:#253036; --muted:#667085; --radius:14px; --shadow:0 8px 24px rgba(15,61,62,.12); --ring:0 0 0 3px rgba(26,188,156,.25); } *{box-sizing:border-box} html,body{margin:0} body{ font-family:Inter,system-ui,-apple-system,Segoe UI,Roboto,Ubuntu,"Helvetica Neue",Arial; color:var(--text); background:#fff; line-height:1.55; letter-spacing:.2px; } img{max-width:100%;height:auto;display:block} a{color:inherit;text-decoration:none} .container{max-width:1120px;margin-inline:auto;padding:0 16px}
-en-tête {
-position : collant ; haut : 0 ; z-index : 50 ;
-arrière-plan : dégradé linéaire (180 deg, #ffffff 70 %, rgba (255 255 255, .7));
-filtre d'arrière-plan : saturation (140 %) flou (6 px) ;
-bordure inférieure : 1 px solide #eef2f1
-}
-.nav{affichage : flex ; align-items : center ; justify-content : space-between ; hauteur : 68 px}
-.marque{affichage : flex ; gap : 10 px ; align-items : center}
-.marque img{largeur : 38 px ; hauteur : 38 px ; rayon de bordure : 10 px ; ombre de boîte : 0 2 px 8 px rgba(0,0,0,.08)}
-.marque .titre{poids de police : 800 ; couleur : var(--ink); espacement des lettres : 0,3 px}
-.nav a{rembourrage : 8 px 12 px ; rayon de bordure : 10 px ; couleur : var(--ink); poids de police : 600}
-.nav a : survol{arrière-plan : rgba(26,188,156,.08)}
+﻿<!DOCTYPE html> <html lang="fr"> <head> <meta charset="utf-8" /> <meta name="viewport" content="width=device-width, initial-scale=1" /> <title>MVITA Travels - Transferts et excursions à Zanzibar</title> <meta name="description" content="MVITA Travels : transferts aéroport, taxi privé, excursions à Zanzibar. Réservez via WhatsApp rapidement."> <link rel="icon" type="image/png" href="assets/favicon.png" /> <link rel="preload" as="image" href="assets/cover.jpg" /> <style> :root{ --ocean:#16a085; --turquoise:#1abc9c; --spice:#2ecc71; --sand:#f6f1e9; --coral:#ff6b6b; --ink:#0f3d3e; --text:#253036; --muted:#667085; --shadow:0 8px 24px rgba(15,61,62,.12); --ring:0 0 0 3px rgba(26,188,156,.25) } *{box-sizing:border-box} html,body{margin:0} body{font-family:Inter,system-ui,-apple-system,Segoe UI,Roboto,Ubuntu,"Helvetica Neue",Arial;color:var(--text);background:#fff;line-height:1.55;letter-spacing:.2px} img{max-width:100%;height:auto;display:block} a{text-decoration:none;color:inherit} .container{max-width:1120px;margin-inline:auto;padding:0 16px}
+header{position:sticky;top:0;z-index:50;background:linear-gradient(180deg,#ffffff 70%,rgba(255,255,255,.7));backdrop-filter:saturate(140%) blur(6px);border-bottom:1px solid #eef2f1}
+.nav{display:flex;align-items:center;justify-content:space-between;height:68px;gap:12px;flex-wrap:wrap}
+.brand{display:flex;gap:10px;align-items:center}
+.brand img{width:38px;height:38px;border-radius:10px;box-shadow:0 2px 8px rgba(0,0,0,.08)}
+.brand .title{font-weight:800;color:var(--ink);letter-spacing:.3px}
+.nav a{padding:8px 12px;border-radius:10px;color:var(--ink);font-weight:600}
+.nav a:hover{background:rgba(26,188,156,.08)}
 
-/* Héros recentré dans .container */
-.hero{
-background:linear-gradient(180deg, var(--sand), #ffffff 60%);
-padding:46px 0;
-}
-.hero-inner{
-display:grid;
-grid-template-columns:1.15fr .85fr;
-gap:28px;
-align-items:center;
-}
+.hero{background:linear-gradient(180deg,var(--sand),#ffffff 60%);padding:46px 0}
+.hero-inner{display:grid;grid-template-columns:1.15fr .85fr;gap:28px;align-items:center}
 .hero .lead h1{font-size:clamp(28px,4.5vw,44px);margin:4px 0 10px;color:var(--ink)}
 .hero .lead p{color:var(--muted);margin:0 0 12px}
 .badges{display:flex;gap:10px;flex-wrap:wrap;margin-top:14px}
@@ -41,22 +27,17 @@ align-items:center;
 .card .body{padding:14px}
 .card .title{font-weight:800;color:var(--ink);margin-bottom:6px;letter-spacing:.2px}
 .chip{display:inline-block;font-size:12px;padding:4px 8px;border-radius:999px;background:rgba(46,204,113,.12);color:var(--spice);border:1px solid rgba(46,204,113,.25);margin-top:6px}
-
 .services .card img{height:190px;object-fit:cover}
-.services .card:nth-child(1) .title{couleur:var(--ocean)}
-.services .card:nth-child(2) .title{couleur:#127C86}
-.services .card:nth-child(3) .title{couleur:var(--spice)}
+.services .card:nth-child(1) .title{color:var(--ocean)}
+.services .card:nth-child(2) .title{color:#127C86}
+.services .card:nth-child(3) .title{color:var(--spice)}
 
-.form{affichage:grille;modèle-grille-colonnes:1fr 1fr;espace:14px}
-.form .complet{grille-colonne:1/-1}
-étiquette{affichage:bloc;poids-police:700;marge-bas:6px;couleur:var(--ink)}
-entrée,sélection,zone-texte{
-largeur:100%;rembourrage:11px 12px;bordure:1px solide #d9e7e4;rayon-bordure:12px;police:hériter;arrière-plan:#fff;
-transition:bordure .15s, ombre-boîte .15s;
-}
-entrée : focus, sélection : focus, zone de texte : focus{contour : aucun ; couleur de bordure : var(--turquoise) ; ombre de boîte : var(--ring)}
-zone de texte{hauteur minimale : 100 px ; redimensionnement : vertical ; arrière-plan : dégradé linéaire(#ffffff, #ffffff) zone de remplissage, dégradé linéaire(180 deg, #e7f8f3, #ffffff) zone de bordure}
-
+.form{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+.form .full{grid-column:1/-1}
+label{display:block;font-weight:700;margin-bottom:6px;color:var(--ink)}
+input,select,textarea{width:100%;padding:11px 12px;border:1px solid #d9e7e4;border-radius:12px;font:inherit;background:#fff;transition:border .15s, box-shadow .15s}
+input:focus,select:focus,textarea:focus{outline:none;border-color:var(--turquoise);box-shadow:var(--ring)}
+textarea{min-height:100px;resize:vertical;background:linear-gradient(#ffffff,#ffffff) padding-box,linear-gradient(180deg,#e7f8f3,#ffffff) border-box}
 .form-actions{display:flex;gap:10px;flex-wrap:wrap;margin-top:6px}
 .btn{display:inline-flex;align-items:center;justify-content:center;padding:11px 16px;border-radius:12px;font-weight:800;border:1px solid transparent;cursor:pointer;letter-spacing:.2px}
 .btn.primary{background:linear-gradient(180deg,var(--ocean),#11967d);color:#fff;box-shadow:0 6px 16px rgba(22,160,133,.25)}
@@ -64,72 +45,16 @@ zone de texte{hauteur minimale : 100 px ; redimensionnement : vertical ; arrièr
 .btn.outline{border-color:#cfe7e3;background:linear-gradient(180deg,#ffffff,#f8fffd);color:var(--ocean)}
 .btn.outline:hover{background:#f1fffb}
 
-.avis .avis{border:1px solid #e2edea;border-radius:14px;padding:12px;background:linear-gradient(180deg,#ffffff,#fbfffe)}
-.avis .avis+.avis{margin-top:10px}
-.étoiles{color:#f59e0b;margin-left:6px}
-.meta{color:var(--muted);font-size:14px}
-.étoiles-input{display:flex;gap:6px}
-.bouton d'entrée étoiles{border:1px solid #d9e7e4;background:#fff;border-radius:10px;padding:6px 10px;curseur:pointer}
-.bouton d'entrée étoiles.actif,.étoiles-input bouton : hover{background:#fff7ed;border-color:#f59e0b}
+.reviews .review{border:1px solid #e2edea;border-radius:14px;padding:12px;background:linear-gradient(180deg,#ffffff,#fbfffe)}
+.reviews .review+.review{margin-top:10px}
+.stars{color:#f59e0b;margin-left:6px}
+.meta{color:#667085;font-size:14px}
 
-pied de page{rembourrage : 26 px 0 ; arrière-plan : var(--sand); marge supérieure : 34 px ; bordure supérieure : 1 px solide #ebeee9}
-.pied{affichage : flex; alignement des éléments : centre; justification du contenu : espace entre les deux ; espace : 12 px ; enroulement flexible : enroulement}
-.pied .cta{affichage : flex; espace : 10 px ; alignement des éléments : centre}
-.pied .cta a{couleur : #fff ; arrière-plan : gradient linéaire (180 deg, var(--turquoise), #18a589); rembourrage : 8 px 12 px ; rayon de bordure : 999 px ; bordure : 1 px solide rgba (26 188 156, 0,3)}
-.pied .cta a : survol{filtre : luminosité (1,05)}
+footer{padding:26px 0;background:var(--sand);margin-top:34px;border-top:1px solid #ebeee9}
+.foot{display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap}
 
-@media (largeur maximale : 900 px) ; modèle de grille
- : 1 fr ...
+@media (max-width:900px){.hero-inner{grid-template-columns:1fr}.grid{grid-template-columns:1fr 1fr}}
+@media (max-width:640px){.grid{grid-template-columns:1fr}.form{grid-template-columns:1fr}}
+</style>
 
-
-
-
-
-
-
-</head> <body> <header> <div class="container nav"> <a href="#" class="brand"> <img src="assets/logo.png" alt="Logo MVITA"> <span class="title">Voyages MVITA</span> </a> <nav> <a href="#services">Services</a> <a href="#booking">Réservation</a> <a href="#reviews">Avis</a> <a href="#contact">Contact</a> </nav> </div> </header> <main> <!-- Héros recentré --> <section class="hero"> <div class="container hero-inner"> <div class="lead"> <span class="tag"><i></i> Zanzibar, Tanzanie</span> <h1>Transferts & Excursions, esprit de Zanzibar</h1> <p>Des eaux turquoises aux fermes d'épices, profitez de chauffeurs ponctuels, de véhicules confortables et d'expériences authentiques. Réservez en un clic sur WhatsApp.</p> <div class="badge"> <span class="badge">Aéroport ↔ Hôtel</span> <span class="badge">Excursions privées</span> <span class="badge">Support WhatsApp</span> </div> </div> <div class="card"> <img src="assets/cover.jpg" alt="Plage turquoise de Zanzibar"> </div> </div> </section> <section id="services" class="section conteneur services"> <h2>Nos services</h2> <div class="grid"> <article class="card"> <img src="assets/taxi.jpg" alt="Service Taxi / Transfert"> <div class="body"> <div class="title">Transferts & Taxi privé</div> <p class="muted">Aéroport ↔ Hôtel et voyages sur mesure. Chauffeurs professionnels, prix clairs. <span class="chip">Disponible 24h/24 et 7j/7</span></p> </div> </article>
-
-  <article class="card">
-    <img src="assets/excursion.jpg" alt="Excursions à Zanzibar">
-    <div class="body">
-      <div class="title">Excursions</div>
-      <p class="muted">Safari Blue, Prison Island, Stone Town, dhow au coucher du soleil et plus encore.</p>
-    </div>
-  </article>
-
-  <article class="card">
-    <img src="assets/spice.jpg" alt="Spice Tour Zanzibar">
-    <div class="body">
-      <div class="title">Spice Tour</div>
-      <p class="muted">Visitez les fermes d’épices, dégustez et découvrez l’héritage swahili.</p>
-    </div>
-  </article>
-</div>
-</section> <section id="booking" class="section conteneur"> <h2>Réservation rapide</h2> <p class="muted">Complétez le formulaire : votre message est prêt pour WhatsApp.</p> <form id="booking-form" class="form"> <div> <label for="service">Service</label> <select id="service" name="service" requis> <option value="Transfert Aéroport">Transfert Aéroport</option> <option value="Taxi privé">Taxi privé</option> <option value="Safari Blue">Safari Blue</option> <option value="Prison Island">Prison Island</option> <option value="Stone Town">Stone Town</option> <option value="Spice Tour">Spice Tour</option> </select> </div> <div> <label for="date">Date</label> <input id="date" name="date" type="date" requis> </div> <div> <étiquette for="time">Heure</label> <input id="time" name="time" type="time" required> </div> <div> <label for="passengers">Passagers</label> <input id="passengers" name="passengers" type="number" min="1" value="2"> </div> <div> <label for="pickup">Départ</label> <input id="pickup" name="pickup" type="text" placeholder="Aéroport / Hôtel..." required> </div> <div> <label for="dropoff">Destination</label> <input id="dropoff" name="dropoff" type="text" placeholder="Hôtel / Activité..." required> </div> <div class="full"> <label for="notes">Notes</label> <textarea id="notes" name="notes" placeholder="Numéro de vol, horaires, préférence véhicule…"></textarea> </div> <div class="full form-actions"> <button type="submit" class="btn primary">Confirmer</button> <a class="btn outline" id="wa-link" target="_blank" rel="noopener">WhatsApp</a> </div> </form> </section> <section id="reviews" class="section container reviews"> <h2>Avis clients</h2> <div id="reviews-list"></div>
-
-<h3>Laisser un avis</h3>
-<form id="review-form" class="form">
-  <div class="full">
-    <label>Note</label>
-    <div class="stars-input">
-      <button type="button" data-value="1">★</button>
-      <button type="button" data-value="2">★</button>
-      <button type="button" data-value="3">★</button>
-      <button type="button" data-value="4">★</button>
-      <button type="button" data-value="5">★</button>
-    </div>
-    <input type="hidden" id="rating-value" value="5">
-  </div>
-  <div>
-    <label for="name">Nom</label>
-    <input id="name" name="name" type="text" required>
-  </div>
-  <div class="full">
-    <label for="comment">Commentaire</label>
-    <textarea id="comment" name="comment" required></textarea>
-  </div>
-  <div class="full">
-    <button type="submit" class="btn outline">Envoyer l’avis</button>
-  </div>
-</form>
-</section> </main> <footer id="contact"> <div class="container foot"> <div>© <span id="year"></span> MVITA Travels</div> <div class="cta"> <a href="https://wa.me/255773543109" target="_blank" rel="noopener">WhatsApp</a> <span class="muted">Zanzibar, Tanzanie</span> </div> </div> </footer> <script> function buildWA(e){ e.preventDefault(); const g = id => document.getElementById(id).value.trim(); const msg = `Bonjour MVITA Travels !%0AService: ${encodeURIComponent(g('service'))}%0ADate: ${encodeURIComponent(g('date'))}%0AHeure: ${encodeURIComponent(g('time'))}%0APassesseurs: ${encodeURIComponent(g('passengers'))}%0ADépart: ${encodeURIComponent(g('pickup'))}%0ADestination: ${encodeURIComponent(g('dropoff'))}%0ANotes: ${encodeURIComponent(g('notes'))}`; const url = `https://wa.me/255773543109?text=${msg}`; const a = document.getElementById('wa-link'); if(a) a.href = url; window.open(url, '_blank'); return false; } document.addEventListener('DOMContentLoaded', ()=>{ const y=document.getElementById('year'); if(y) y.textContent=new Date().getFullYear(); }); document.addEventListener('click',(e)=>{ const b = e.target.closest('bouton de saisie .stars'); if(!b) return; const val = b.getAttribute('data-value'); const input=document.getElementById('rating-value'); if(input) input.value=val; document.querySelectorAll('bouton de saisie .stars').forEach(x=>x.classList.toggle('active', x.getAttribute('data-value')<=val)); }); function sendReview(e){ e.preventDefault(); alert("Merci pour votre avis !"); e.target.reset(); } </script> </body> </html>
+</head> <body> <header> <div class="container nav"> <a href="#" class="brand"> <img src="assets/logo.png" alt="Logo MVITA"> <span class="title">Voyages MVITA</span> </a> <nav> <a href="#services">Services</a> <a href="#booking">Réservation</a> <a href="#reviews">Avis</a> <a href="#contact">Contact</a> </nav> </div> </header> <main> <section class="hero"> <div class="container hero-inner"> <div class="lead"> <span class="tag"><i></i> Zanzibar, Tanzanie</span> <h1>Transferts & Excursions, esprit de Zanzibar</h1> <p>Des eaux turquoises aux fermes d'épices, profitez de chauffeurs ponctuels, de véhicules confortables et d'expériences authentiques. Réservez en un clic sur WhatsApp.</p> <div class="badges"> <span class="badge">Aéroport ↔ Hôtel</span> <span class="badge">Excursions privées</span> <span class="badge">Support WhatsApp</span> </div> </div> <div class="card"> <img src="assets/cover.jpg" alt="Plage turquoise de Zanzibar"> </div> </div> </section> <section id="services" class="section container services"> <h2>Nos services</h2> <div class="grid"> <article class="card"> <img src="assets/taxi.jpg" alt="Service Taxi / Transfert"> <div class="body"> <div class="title">Transferts & Taxi privé</div> <p class="muted">Aéroport ↔ Hôtel et voyages sur mesure. Chauffeurs professionnels, prix clairs. <span class="chip">Disponible 24h/24 et 7j/7</span></p> </div> </article> <article class="card"> <img src="assets/excursion.jpg" alt="Excursions à Zanzibar"> <div class="body"> <div class="title">Excursions</div> <p class="muted">Safari Blue, Prison Island, Stone Town, dhow au coucher du soleil et plus encore.</p> </div> </article> <article class="card"> <img src="assets/spice.jpg" alt="Spice Tour Zanzibar"> <div class="body"> <div class="title">Spice Tour</div> <p class="muted">Visitez les fermes d’épices, dégustez et découvrez l’héritage swahili.</p> </div> </article> </div> </section> <section id="booking" class="section container"> <h2>Réservation rapide</h2> <p class="muted">Complétez le formulaire : votre message est prêt pour WhatsApp.</p> <form id="booking-form" class="form"> <div> <label for="service">Service</label> <select id="service" name="service" required> <option value="Transfert Aéroport">Transfert Aéroport</option> <option value="Taxi privé">Taxi privé</option> <option value="Safari Blue">Safari Blue</option> <option value="Prison Island">Prison Island</option> <option value="Stone Town">Stone Town</option> <option value="Spice Tour">Spice Tour</option> </select> </div> <div> <label for="date">Date</label> <input id="date" name="date" type="date" required> </div> <div> <label for="time">Heure</label> <input id="time" name="time" type="time" required> </div> <div> <label for="passengers">Passagers</label> <input id="passengers" name="passengers" type="number" min="1" value="2"> </div> <div> <label for="pickup">Départ</label> <input id="pickup" name="pickup" type="text" placeholder="Aéroport / Hôtel..." required> </div> <div> <label for="dropoff">Destination</label> <input id="dropoff" name="dropoff" type="text" placeholder="Hôtel / Activité..." required> </div> <div class="full"> <label for="notes">Notes</label> <textarea id="notes" name="notes" placeholder="Numéro de vol, horaires, préférence véhicule…"></textarea> </div> <div class="full form-actions"> <button type="submit" class="btn primary">Confirmer</button> <a class="btn outline" id="wa-link" target="_blank" rel="noopener">WhatsApp</a> </div> </form> </section> <section id="reviews" class="section container reviews"> <h2>Avis clients</h2> <div id="reviews-list"></div> <h3>Laisser un avis</h3> <form id="review-form" class="form"> <div class="full"> <label>Note</label> <div class="stars-input"> <button type="button" data-value="1">★</button> <button type="button" data-value="2">★</button> <button type="button" data-value="3">★</button> <button type="button" data-value="4">★</button> <button type="button" data-value="5">★</button> </div> <input type="hidden" id="rating-value" value="5"> </div> <div> <label for="name">Nom</label> <input id="name" name="name" type="text" required> </div> <div class="full"> <label for="comment">Commentaire</label> <textarea id="comment" name="comment" required></textarea> </div> <div class="full"> <button type="submit" class="btn outline">Envoyer l’avis</button> </div> </form> </section> </main> <footer id="contact"> <div class="container foot"> <div>© <span id="year"></span> MVITA Travels</div> <div class="cta"> <a href="https://wa.me/255773543109" target="_blank" rel="noopener" class="btn primary">WhatsApp</a> <span class="muted">Zanzibar, Tanzanie</span> </div> </div> </footer> <script src="script.js" defer></script> </body> </html>
