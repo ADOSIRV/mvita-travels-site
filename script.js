@@ -1,4 +1,23 @@
-﻿// i18n dictionaries
+﻿Merci, j’ai repéré deux erreurs de syntaxe dans votre script qui bloquent l’exécution, donc l’i18n ne s’applique pas:
+
+Dans updateWaLink, l’URL WhatsApp n’est pas entourée de guillemets et l’interpolation n’est pas en template string.
+Actuel:
+waLink.href = https://wa.me/${phone}?text=${text};
+Corrigé:
+waLink.href = https://wa.me/${phone}?text=${text};
+
+Dans renderReviews, le div.innerHTML doit être une template string multi‑ligne. Actuel, les backticks manquent:
+div.innerHTML = <div><strong>${r.name}</strong> ... </p> ;
+Corrigé:
+div.innerHTML = `
+
+<div><strong>${r.name}</strong> <span class="stars">${stars}</span></div> <div class="meta">${formatted}</div> <p>${r.comment}</p> `;
+Avec ces erreurs, le JS s’arrête avant d’appeler applyI18n(), d’où la langue qui ne change pas.
+
+Voici votre script.js corrigé à l’identique, avec uniquement les fixes nécessaires.
+
+script.js corrigé
+// i18n dictionaries
 const DICTS = {
 fr: {
 'nav.services': 'Services',
@@ -189,7 +208,6 @@ document.querySelectorAll('[data-i18n]').forEach(el => {
 const key = el.getAttribute('data-i18n');
 el.textContent = t(key);
 });
-// Update visible options of the service select
 const optMap = {
 'form.opt.transfer': '#service option:nth-child(1)',
 'form.opt.taxi': '#service option:nth-child(2)',
@@ -202,7 +220,6 @@ for (const [k, sel] of Object.entries(optMap)) {
 const o = document.querySelector(sel);
 if (o) o.textContent = t(k);
 }
-// Update WA link
 if (typeof window.updateWaLink === 'function') window.updateWaLink();
 }
 window.__t = t;
@@ -221,7 +238,6 @@ if (typeof window.renderReviews === 'function') window.renderReviews();
 }
 setLang(lang);
 applyI18n();
-// Footer year fallback
 const y = document.getElementById('year');
 if (y && !y.textContent) y.textContent = new Date().getFullYear();
 });
