@@ -6,6 +6,7 @@ header{position:sticky;top:0;z-index:50;background:linear-gradient(180deg,#fffff
 .brand .title{font-weight:800;color:var(--ink);letter-spacing:.3px}
 .nav a{padding:8px 12px;border-radius:10px;color:var(--ink);font-weight:600}
 .nav a:hover{background:rgba(26,188,156,.08)}
+.nav select{padding:8px 10px;border-radius:10px;border:1px solid #d9e7e4;background:#fff;font-weight:600;color:var(--ink)}
 
 .hero{background:linear-gradient(180deg,var(--sand),#ffffff 60%);padding:46px 0}
 .hero-inner{display:grid;grid-template-columns:1.15fr .85fr;gap:28px;align-items:center}
@@ -14,7 +15,8 @@ header{position:sticky;top:0;z-index:50;background:linear-gradient(180deg,#fffff
 .badges{display:flex;gap:10px;flex-wrap:wrap;margin-top:14px}
 .badge{background:linear-gradient(180deg,#eafff8,#ffffff);border:1px solid #d7f3ee;color:var(--ocean);padding:6px 10px;border-radius:999px;font-size:14px}
 .hero .card{border-radius:18px;overflow:hidden;box-shadow:var(--shadow);border:1px solid #e8f1ef}
-.hero img{width:100%;height:100%;object-fit:cover;max-height:440px;filter:saturate(1.05) contrast(1.02)}
+.hero picture, .hero img{width:100%;height:100%;max-height:440px}
+.hero img{object-fit:cover;filter:saturate(1.05) contrast(1.02)}
 .tag{display:inline-flex;gap:6px;align-items:center;font-size:12px;color:#0b5c57;background:rgba(26,188,156,.1);border:1px solid rgba(26,188,156,.2);padding:4px 8px;border-radius:999px}
 .tag i{width:8px;height:8px;background:var(--turquoise);display:inline-block;border-radius:50%}
 
@@ -27,10 +29,8 @@ header{position:sticky;top:0;z-index:50;background:linear-gradient(180deg,#fffff
 .card .body{padding:14px}
 .card .title{font-weight:800;color:var(--ink);margin-bottom:6px;letter-spacing:.2px}
 .chip{display:inline-block;font-size:12px;padding:4px 8px;border-radius:999px;background:rgba(46,204,113,.12);color:var(--spice);border:1px solid rgba(46,204,113,.25);margin-top:6px}
+.services .card picture{display:block}
 .services .card img{height:190px;object-fit:cover}
-.services .card:nth-child(1) .title{color:var(--ocean)}
-.services .card:nth-child(2) .title{color:#127C86}
-.services .card:nth-child(3) .title{color:var(--spice)}
 
 .form{display:grid;grid-template-columns:1fr 1fr;gap:14px}
 .form .full{grid-column:1/-1}
@@ -57,12 +57,36 @@ footer{padding:26px 0;background:var(--sand);margin-top:34px;border-top:1px soli
 @media (max-width:640px){.grid{grid-template-columns:1fr}.form{grid-template-columns:1fr}}
 </style>
 
-</head> <body> <header> <div class="container nav"> <a href="#" class="brand"> <img src="assets/logo.png" alt="Logo MVITA"> <span class="title">Voyages MVITA</span> </a> <nav> <a href="#services">Services</a> <a href="#booking">Réservation</a> <a href="#reviews">Avis</a> <a href="#contact">Contact</a> </nav> </div> </header> <main> <section class="hero"> <div class="container hero-inner"> <div class="lead"> <span class="tag"><i></i> Zanzibar, Tanzanie</span> <h1>Transferts & Excursions, esprit de Zanzibar</h1> <p>Des eaux turquoises aux fermes d'épices, profitez de chauffeurs ponctuels, de véhicules confortables et d'expériences authentiques. Réservez en un clic sur WhatsApp.</p> <div class="badges"> <span class="badge">Aéroport ↔ Hôtel</span> <span class="badge">Excursions privées</span> <span class="badge">Support WhatsApp</span> </div> </div> <div class="card"> <img src="assets/cover.jpg" alt="Plage turquoise de Zanzibar"> </div> </div> </section> <section id="services" class="section container services"> <h2>Nos services</h2> <div class="grid"> <article class="card"> <img src="assets/taxi.jpg" alt="Service Taxi / Transfert"> <div class="body"> <div class="title">Transferts & Taxi privé</div> <p class="muted">Aéroport ↔ Hôtel et voyages sur mesure. Chauffeurs professionnels, prix clairs. <span class="chip">Disponible 24h/24 et 7j/7</span></p> </div> </article> <article class="card"> <img src="assets/excursion.jpg" alt="Excursions à Zanzibar"> <div class="body"> <div class="title">Excursions</div> <p class="muted">Safari Blue, Prison Island, Stone Town, dhow au coucher du soleil et plus encore.</p> </div> </article> <article class="card"> <img src="assets/spice.jpg" alt="Spice Tour Zanzibar"> <div class="body"> <div class="title">Spice Tour</div> <p class="muted">Visitez les fermes d’épices, dégustez et découvrez l’héritage swahili.</p> </div> </article> </div> </section> <section id="booking" class="section container"> <h2>Réservation rapide</h2> <p class="muted">Complétez le formulaire : votre message est prêt pour WhatsApp.</p> <form id="booking-form" class="form"> <div> <label for="service">Service</label> <select id="service" name="service" required> <option value="Transfert Aéroport">Transfert Aéroport</option> <option value="Taxi privé">Taxi privé</option> <option value="Safari Blue">Safari Blue</option> <option value="Prison Island">Prison Island</option> <option value="Stone Town">Stone Town</option> <option value="Spice Tour">Spice Tour</option> </select> </div> <div> <label for="date">Date</label> <input id="date" name="date" type="date" required> </div> <div> <label for="time">Heure</label> <input id="time" name="time" type="time" required> </div> <div> <label for="passengers">Passagers</label> <input id="passengers" name="passengers" type="number" min="1" value="2"> </div> <div> <label for="pickup">Départ</label> <input id="pickup" name="pickup" type="text" placeholder="Aéroport / Hôtel..." required> </div> <div> <label for="dropoff">Destination</label> <input id="dropoff" name="dropoff" type="text" placeholder="Hôtel / Activité..." required> </div> <div class="full"> <label for="notes">Notes</label> <textarea id="notes" name="notes" placeholder="Numéro de vol, horaires, préférence véhicule…"></textarea> </div> <div class="full form-actions"> <button type="submit" class="btn primary">Confirmer</button> <a class="btn outline" id="wa-link" target="_blank" rel="noopener">WhatsApp</a> </div> </form> </section> <section id="reviews" class="section container reviews"> <h2>Avis clients</h2> <div id="reviews-list"></div>
+</head> <body> <header> <div class="container nav"> <a href="#" class="brand"> <img src="assets/logo.png" alt="Logo MVITA"> <span class="title" data-i18n="brand.title">Voyages MVITA</span> </a> <nav> <a href="#services" data-i18n="nav.services">Services</a> <a href="#booking" data-i18n="nav.booking">Réservation</a> <a href="#reviews" data-i18n="nav.reviews">Avis</a> <a href="#contact" data-i18n="nav.contact">Contact</a> <select id="lang" aria-label="Language"> <option value="fr" selected>Français</option> <option value="en">English</option> <option value="es">Español</option> </select> </nav> </div> </header> <main> <section class="hero"> <div class="container hero-inner"> <div class="lead"> <span class="tag"><i></i> <span data-i18n="hero.location">Zanzibar, Tanzanie</span></span> <h1 data-i18n="hero.title">Transferts & Excursions, esprit de Zanzibar</h1> <p data-i18n="hero.lead">Des eaux turquoises aux fermes d'épices, profitez de chauffeurs ponctuels, de véhicules confortables et d'expériences authentiques. Réservez en un clic sur WhatsApp.</p> <div class="badges"> <span class="badge" data-i18n="badges.airport">Aéroport ↔ Hôtel</span> <span class="badge" data-i18n="badges.private">Excursions privées</span> <span class="badge" data-i18n="badges.whatsapp">Support WhatsApp</span> </div> </div> <div class="card"> <picture> <source srcset="assets/cover.webp" type="image/webp"> <img src="assets/cover.jpg" alt="Plage turquoise de Zanzibar"> </picture> </div> </div> </section> <section id="services" class="section container services"> <h2 data-i18n="services.title">Nos services</h2> <div class="grid"> <article class="card"> <picture> <source srcset="assets/taxi.webp" type="image/webp"> <img src="assets/taxi.jpg" alt="Service Taxi / Transfert" loading="lazy"> </picture> <div class="body"> <div class="title" data-i18n="cards.taxi.title">Transferts & Taxi privé</div> <p class="muted" data-i18n="cards.taxi.desc">Aéroport ↔ Hôtel et voyages sur mesure. Chauffeurs professionnels, prix clairs. Disponible 24h/24 et 7j/7</p> </div> </article>
 
-<h3>Laisser un avis</h3>
+  <article class="card">
+    <picture>
+      <source srcset="assets/excursion.webp" type="image/webp">
+      <img src="assets/excursion.jpg" alt="Excursions à Zanzibar" loading="lazy">
+    </picture>
+    <div class="body">
+      <div class="title" data-i18n="cards.excursions.title">Excursions</div>
+      <p class="muted" data-i18n="cards.excursions.desc">Safari Blue, Prison Island, Stone Town, dhow au coucher du soleil et plus encore.</p>
+    </div>
+  </article>
+
+  <article class="card">
+    <picture>
+      <source srcset="assets/spice.webp" type="image/webp">
+      <img src="assets/spice.jpg" alt="Spice Tour Zanzibar" loading="lazy">
+    </picture>
+    <div class="body">
+      <div class="title" data-i18n="cards.spice.title">Spice Tour</div>
+      <p class="muted" data-i18n="cards.spice.desc">Visitez les fermes d’épices, dégustez et découvrez l’héritage swahili.</p>
+    </div>
+  </article>
+</div>
+</section> <section id="booking" class="section container"> <h2 data-i18n="booking.title">Réservation rapide</h2> <p class="muted" data-i18n="booking.lead">Complétez le formulaire : votre message est prêt pour WhatsApp.</p> <form id="booking-form" class="form"> <div> <label for="service" data-i18n="form.service">Service</label> <select id="service" name="service" required> <option value="Transfert Aéroport" data-i18n="form.opt.transfer">Transfert Aéroport</option> <option value="Taxi privé" data-i18n="form.opt.taxi">Taxi privé</option> <option value="Safari Blue" data-i18n="form.opt.safari">Safari Blue</option> <option value="Prison Island" data-i18n="form.opt.prison">Prison Island</option> <option value="Stone Town" data-i18n="form.opt.stone">Stone Town</option> <option value="Spice Tour" data-i18n="form.opt.spice">Spice Tour</option> </select> </div> <div> <label for="date" data-i18n="form.date">Date</label> <input id="date" name="date" type="date" required> </div> <div> <label for="time" data-i18n="form.time">Heure</label> <input id="time" name="time" type="time" required> </div> <div> <label for="passengers" data-i18n="form.passengers">Passagers</label> <input id="passengers" name="passengers" type="number" min="1" value="2"> </div> <div> <label for="pickup" data-i18n="form.pickup">Départ</label> <input id="pickup" name="pickup" type="text" placeholder="Aéroport / Hôtel..." required> </div> <div> <label for="dropoff" data-i18n="form.dropoff">Destination</label> <input id="dropoff" name="dropoff" type="text" placeholder="Hôtel / Activité..." required> </div> <div class="full"> <label for="notes" data-i18n="form.notes">Notes</label> <textarea id="notes" name="notes" placeholder="Numéro de vol, horaires, préférence véhicule…"></textarea> </div> <div class="full form-actions"> <button type="submit" class="btn primary" data-i18n="form.confirm">Confirmer</button> <a class="btn outline" id="wa-link" target="_blank" rel="noopener" data-i18n="form.whatsapp">WhatsApp</a> </div> </form> </section> <section id="reviews" class="section container reviews"> <h2 data-i18n="reviews.title">Avis clients</h2> <div id="reviews-list"></div>
+
+<h3 data-i18n="reviews.leave">Laisser un avis</h3>
 <form id="review-form" class="form">
   <div class="full">
-    <label>Note</label>
+    <label data-i18n="reviews.note">Note</label>
     <div class="stars-input">
       <button type="button" data-value="1">★</button>
       <button type="button" data-value="2">★</button>
@@ -73,15 +97,15 @@ footer{padding:26px 0;background:var(--sand);margin-top:34px;border-top:1px soli
     <input type="hidden" id="rating-value" value="5">
   </div>
   <div>
-    <label for="name">Nom</label>
+    <label for="name" data-i18n="reviews.name">Nom</label>
     <input id="name" name="name" type="text" required>
   </div>
   <div class="full">
-    <label for="comment">Commentaire</label>
+    <label for="comment" data-i18n="reviews.comment">Commentaire</label>
     <textarea id="comment" name="comment" required></textarea>
   </div>
   <div class="full">
-    <button type="submit" class="btn outline">Envoyer l’avis</button>
+    <button type="submit" class="btn outline" data-i18n="reviews.send">Envoyer l’avis</button>
   </div>
 </form>
-</section> </main> <footer id="contact"> <div class="container foot"> <div>© <span id="year"></span> MVITA Travels</div> <div class="cta"> <a href="https://wa.me/255773543109" target="_blank" rel="noopener" class="btn primary">WhatsApp</a> <span class="muted">Zanzibar, Tanzanie</span> </div> </div> </footer> <script src="script.js" defer></script> </body> </html>
+</section> </main> <footer id="contact"> <div class="container foot"> <div>© <span id="year"></span> MVITA Travels</div> <div class="cta"> <a href="https://wa.me/255773543109" target="_blank" rel="noopener" class="btn primary">WhatsApp</a> <span class="muted" data-i18n="footer.location">Zanzibar, Tanzanie</span> </div> </div> </footer> <script src="script.js" defer></script> </body> </html>
