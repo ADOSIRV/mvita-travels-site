@@ -1,22 +1,6 @@
-﻿Merci, j’ai repéré deux erreurs de syntaxe dans votre script qui bloquent l’exécution, donc l’i18n ne s’applique pas:
+﻿(function () {
+console.log('[load] script.js loaded');
 
-Dans updateWaLink, l’URL WhatsApp n’est pas entourée de guillemets et l’interpolation n’est pas en template string.
-Actuel:
-waLink.href = https://wa.me/${phone}?text=${text};
-Corrigé:
-waLink.href = https://wa.me/${phone}?text=${text};
-
-Dans renderReviews, le div.innerHTML doit être une template string multi‑ligne. Actuel, les backticks manquent:
-div.innerHTML = <div><strong>${r.name}</strong> ... </p> ;
-Corrigé:
-div.innerHTML = `
-
-<div><strong>${r.name}</strong> <span class="stars">${stars}</span></div> <div class="meta">${formatted}</div> <p>${r.comment}</p> `;
-Avec ces erreurs, le JS s’arrête avant d’appeler applyI18n(), d’où la langue qui ne change pas.
-
-Voici votre script.js corrigé à l’identique, avec uniquement les fixes nécessaires.
-
-script.js corrigé
 // i18n dictionaries
 const DICTS = {
 fr: {
@@ -203,10 +187,18 @@ function t(key) {
 const lang = getLang();
 return (DICTS[lang] && DICTS[lang][key]) || (DICTS.fr && DICTS.fr[key]) || key;
 }
+window.__t = t;
+
 function applyI18n() {
+try {
+console.log('[i18n] apply start, lang=', getLang());
 document.querySelectorAll('[data-i18n]').forEach(el => {
 const key = el.getAttribute('data-i18n');
-el.textContent = t(key);
+const value = t(key);
+if (!value || value === key) {
+console.warn('[i18n] missing key:', key);
+}
+el.textContent = value;
 });
 const optMap = {
 'form.opt.transfer': '#service option:nth-child(1)',
@@ -220,26 +212,41 @@ for (const [k, sel] of Object.entries(optMap)) {
 const o = document.querySelector(sel);
 if (o) o.textContent = t(k);
 }
-if (typeof window.updateWaLink === 'function') window.updateWaLink();
+if (typeof window.updateWaLink === 'function') {
+console.log('[i18n] calling updateWaLink');
+window.updateWaLink();
 }
-window.__t = t;
+console.log('[i18n] apply done');
+} catch (e) {
+console.error('[i18n] apply error:', e);
+}
+}
 
 // Init on DOM ready
 document.addEventListener('DOMContentLoaded', () => {
+try {
+console.log('[init] DOMContentLoaded');
 const select = document.getElementById('lang');
 const lang = getLang();
 if (select) {
 select.value = lang;
 select.addEventListener('change', () => {
+console.log('[lang] change ->', select.value);
 setLang(select.value);
 applyI18n();
-if (typeof window.renderReviews === 'function') window.renderReviews();
+if (typeof window.renderReviews === 'function') {
+console.log('[lang] rerender reviews');
+window.renderReviews();
+}
 });
 }
 setLang(lang);
 applyI18n();
 const y = document.getElementById('year');
 if (y && !y.textContent) y.textContent = new Date().getFullYear();
+} catch (e) {
+console.error('[init] error:', e);
+}
 });
 
 // WhatsApp form integration
@@ -247,57 +254,65 @@ if (y && !y.textContent) y.textContent = new Date().getFullYear();
 const form = document.getElementById('booking-form');
 const waLink = document.getElementById('wa-link');
 const phone = '255773543109';
-if (!form || !waLink) return;
+if (!form || !waLink) {
+console.warn('[wa] form or link not found');
+return;
+}
+
 
 function buildMessage() {
-const service = form.service?.value || '';
-const date = form.date?.value || '';
-const time = form.time?.value || '';
-const pickup = form.pickup?.value || '';
-const dropoff = form.dropoff?.value || '';
-const passengers = form.passengers?.value || '';
-const notes = form.notes?.value || '';
-
-
-const lines = [
-  __t('wa.message.header'),
-  `${__t('wa.message.labels.service')}: ${service}`,
-  `${__t('wa.message.labels.date')}: ${date}`,
-  `${__t('wa.message.labels.time')}: ${time}`,
-  `${__t('wa.message.labels.pickup')}: ${pickup}`,
-  `${__t('wa.message.labels.dropoff')}: ${dropoff}`,
-  `${__t('wa.message.labels.passengers')}: ${passengers}`,
-];
-if (notes && notes.trim()) {
-  lines.push(`${__t('wa.message.labels.notes')}: ${notes.trim()}`);
-}
-lines.push(__t('wa.message.thanks'));
-return lines.join('\n');
+  const service = form.service?.value || '';
+  const date = form.date?.value || '';
+  const time = form.time?.value || '';
+  const pickup = form.pickup?.value || '';
+  const dropoff = form.dropoff?.value || '';
+  const passengers = form.passengers?.value || '';
+  const notes = form.notes?.value || '';
+  const lines = [
+    __t('wa.message.header'),
+    `${__t('wa.message.labels.service')}: ${service}`,
+    `${__t('wa.message.labels.date')}: ${date}`,
+    `${__t('wa.message.labels.time')}: ${time}`,
+    `${__t('wa.message.labels.pickup')}: ${pickup}`,
+    `${__t('wa.message.labels.dropoff')}: ${dropoff}`,
+    `${__t('wa.message.labels.passengers')}: ${passengers}`,
+  ];
+  if (notes && notes.trim()) {
+    lines.push(`${__t('wa.message.labels.notes')}: ${notes.trim()}`);
+  }
+  lines.push(__t('wa.message.thanks'));
+  return lines.join('\n');
 }
 
 // Expose globally so i18n can refresh it
 window.updateWaLink = function updateWaLink() {
-const text = encodeURIComponent(buildMessage());
-waLink.href = https://wa.me/${phone}?text=${text};
+  try {
+    const text = encodeURIComponent(buildMessage());
+    waLink.href = `https://wa.me/${phone}?text=${text}`;
+    console.log('[wa] link updated:', waLink.href);
+  } catch (e) {
+    console.error('[wa] update error:', e);
+  }
 };
 
 window.updateWaLink();
 form.addEventListener('input', window.updateWaLink);
 
 form.addEventListener('submit', (e) => {
-e.preventDefault();
-const requiredOk =
-form.service.value &&
-form.date.value &&
-form.time.value &&
-form.pickup.value &&
-form.dropoff.value;
-if (!requiredOk) {
-alert(__t('js.alert.required'));
-return;
-}
-window.updateWaLink();
-window.open(waLink.href, '_blank', 'noopener');
+  e.preventDefault();
+  const requiredOk =
+    form.service.value &&
+    form.date.value &&
+    form.time.value &&
+    form.pickup.value &&
+    form.dropoff.value;
+  if (!requiredOk) {
+    alert(__t('js.alert.required'));
+    return;
+  }
+  window.updateWaLink();
+  console.log('[wa] open link');
+  window.open(waLink.href, '_blank', 'noopener');
 });
 })();
 
@@ -306,68 +321,83 @@ window.open(waLink.href, '_blank', 'noopener');
 const listEl = document.getElementById('reviews-list');
 const form = document.getElementById('review-form');
 const ratingHidden = document.getElementById('rating-value');
-if (!listEl || !form || !ratingHidden) return;
+if (!listEl || !form || !ratingHidden) {
+console.warn('[reviews] elements not found');
+return;
+}
+
 
 const STORAGE_KEY = 'mvita-reviews-v1';
 
 function getReviews() {
-try { return JSON.parse(localStorage.getItem(STORAGE_KEY)) || []; }
-catch { return []; }
+  try { return JSON.parse(localStorage.getItem(STORAGE_KEY)) || []; }
+  catch (e) { console.warn('[reviews] parse error:', e); return []; }
 }
 function saveReviews(items) {
-localStorage.setItem(STORAGE_KEY, JSON.stringify(items));
+  localStorage.setItem(STORAGE_KEY, JSON.stringify(items));
 }
 
 window.renderReviews = function renderReviews() {
-const items = getReviews();
-listEl.innerHTML = '';
-if (items.length === 0) {
-const p = document.createElement('p');
-p.className = 'muted';
-p.textContent = '—';
-listEl.appendChild(p);
-return;
-}
-items.forEach(r => {
-const div = document.createElement('div');
-div.className = 'review';
-const stars = '★'.repeat(r.rating) + '☆'.repeat(5 - r.rating);
-const date = new Date(r.date);
-const loc = document.documentElement.lang || 'fr';
-const formatted = date.toLocaleDateString(loc, { year:'numeric', month:'short', day:'numeric' });
-div.innerHTML =         <div><strong>${r.name}</strong> <span class="stars">${stars}</span></div>         <div class="meta">${formatted}</div>         <p>${r.comment}</p>      ;
-listEl.appendChild(div);
-});
+  try {
+    const items = getReviews();
+    listEl.innerHTML = '';
+    if (items.length === 0) {
+      const p = document.createElement('p');
+      p.className = 'muted';
+      p.textContent = '—';
+      listEl.appendChild(p);
+      return;
+    }
+    items.forEach(r => {
+      const div = document.createElement('div');
+      div.className = 'review';
+      const stars = '★'.repeat(r.rating) + '☆'.repeat(5 - r.rating);
+      const date = new Date(r.date);
+      const loc = document.documentElement.lang || 'fr';
+      const formatted = date.toLocaleDateString(loc, { year: 'numeric', month: 'short', day: 'numeric' });
+      div.innerHTML = `
+        <div><strong>${r.name}</strong> <span class="stars">${stars}</span></div>
+        <div class="meta">${formatted}</div>
+        <p>${r.comment}</p>
+      `;
+      listEl.appendChild(div);
+    });
+    console.log('[reviews] rendered:', items.length);
+  } catch (e) {
+    console.error('[reviews] render error:', e);
+  }
 };
 
 // Stars selection
 document.querySelectorAll('.stars-input button').forEach(btn => {
-btn.addEventListener('click', () => {
-const val = Number(btn.dataset.value || '5');
-ratingHidden.value = String(val);
-document.querySelectorAll('.stars-input button')
-.forEach(b => b.classList.toggle('active', b === btn));
-});
+  btn.addEventListener('click', () => {
+    const val = Number(btn.dataset.value || '5');
+    ratingHidden.value = String(val);
+    document.querySelectorAll('.stars-input button')
+      .forEach(b => b.classList.toggle('active', b === btn));
+  });
 });
 
 form.addEventListener('submit', (e) => {
-e.preventDefault();
-const name = form.name.value.trim();
-const comment = form.comment.value.trim();
-const rating = Number(ratingHidden.value || '5');
-if (!name || !comment || rating < 1) {
-alert(__t('js.review.missing'));
-return;
-}
-const items = getReviews();
-items.unshift({ name, comment, rating, date: new Date().toISOString() });
-saveReviews(items);
-form.reset();
-ratingHidden.value = '5';
-document.querySelectorAll('.stars-input button').forEach(b => b.classList.remove('active'));
-window.renderReviews();
-alert(__t('js.review.thanks'));
+  e.preventDefault();
+  const name = form.name.value.trim();
+  const comment = form.comment.value.trim();
+  const rating = Number(ratingHidden.value || '5');
+  if (!name || !comment || rating < 1) {
+    alert(__t('js.review.missing'));
+    return;
+  }
+  const items = getReviews();
+  items.unshift({ name, comment, rating, date: new Date().toISOString() });
+  saveReviews(items);
+  form.reset();
+  ratingHidden.value = '5';
+  document.querySelectorAll('.stars-input button').forEach(b => b.classList.remove('active'));
+  window.renderReviews();
+  alert(__t('js.review.thanks'));
 });
 
 window.renderReviews();
+})();
+
 })();
