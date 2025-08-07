@@ -4,6 +4,9 @@ console.log('[load] script.js loaded');
 // i18n dictionaries
 const DICTS = {
 fr: {
+'nav.about': 'Qui sommes-nous ?',
+'about.title': 'Qui sommes-nous ?',
+'about.text': "Mvital Travel s'efforce d'offrir la meilleure expérience zanzibarienne au monde, non pas dans le luxe, mais à un prix abordable et en contact avec la population locale, non seulement pour des vacances à la plage, mais aussi pour explorer l'île. Ma vision et mon plus grand souhait en créant Mvital Travel ne sont pas l'argent, mais la création de souvenirs inoubliables avec mes clients, qui resteront gravés à vie.",
 'nav.services': 'Services',
 'nav.booking': 'Réservation',
 'nav.reviews': 'Avis',
@@ -21,7 +24,7 @@ fr: {
 'cards.excursions.title': 'Excursions',
 'cards.excursions.desc': 'Safari Blue, Prison Island, Stone Town, dhow au coucher du soleil et plus encore.',
 'cards.spice.title': 'Spice Tour',
-'cards.spice.desc': 'Visitez les fermes d’épices, dégustez et découvrez l’héritage swahili.',
+'cards.spice.desc': "Visitez les fermes d’épices, dégustez et découvrez l’héritage swahili.",
 'booking.title': 'Réservation rapide',
 'booking.lead': 'Complétez le formulaire : votre message est prêt pour WhatsApp.',
 'form.service': 'Service',
@@ -60,6 +63,9 @@ fr: {
 'wa.message.thanks': 'Merci !',
 },
 en: {
+'nav.about': 'About us',
+'about.title': 'About us',
+'about.text': "Mvital Travel strives to offer the world's best Zanzibar experience, not in luxury, but at an affordable price and in touch with the local population, not only for beach holidays but also to explore the island. My vision and greatest wish in creating Mvital Travel is not money, but creating unforgettable memories with my clients, memories that will last a lifetime.",
 'nav.services': 'Services',
 'nav.booking': 'Booking',
 'nav.reviews': 'Reviews',
@@ -116,6 +122,9 @@ en: {
 'wa.message.thanks': 'Thanks!',
 },
 es: {
+'nav.about': '¿Quiénes somos?',
+'about.title': '¿Quiénes somos?',
+'about.text': "Mvital Travel se esfuerza por ofrecer la mejor experiencia de Zanzíbar del mundo, no en el lujo, sino a un precio asequible y en contacto con la población local, no solo para unas vacaciones en la playa sino también para explorar la isla. Mi visión y mi mayor deseo al crear Mvital Travel no es el dinero, sino crear recuerdos inolvidables con mis clientes, recuerdos que durarán toda la vida.",
 'nav.services': 'Servicios',
 'nav.booking': 'Reserva',
 'nav.reviews': 'Opiniones',
@@ -160,7 +169,7 @@ es: {
 'footer.location': 'Zanzíbar, Tanzania',
 'js.alert.required': 'Complete todos los campos obligatorios.',
 'js.review.missing': 'Ingrese un nombre, un comentario y una nota válida.',
-'js.review.thanks': '¡Gracias por su opinión!',
+'js.review.thanks': '¡Gracias!',
 'wa.message.header': '¡Hola MVITA Travels!',
 'wa.message.labels.service': 'Servicio',
 'wa.message.labels.date': 'Fecha',
@@ -175,7 +184,6 @@ es: {
 
 const I18N_KEY = 'mvita-lang';
 
-// Translation helpers
 function getLang() {
 return localStorage.getItem(I18N_KEY) || document.documentElement.lang || 'fr';
 }
@@ -191,13 +199,9 @@ window.__t = t;
 
 function applyI18n() {
 try {
-console.log('[i18n] apply start, lang=', getLang());
 document.querySelectorAll('[data-i18n]').forEach(el => {
 const key = el.getAttribute('data-i18n');
 const value = t(key);
-if (!value || value === key) {
-console.warn('[i18n] missing key:', key);
-}
 el.textContent = value;
 });
 const optMap = {
@@ -212,52 +216,37 @@ for (const [k, sel] of Object.entries(optMap)) {
 const o = document.querySelector(sel);
 if (o) o.textContent = t(k);
 }
-if (typeof window.updateWaLink === 'function') {
-console.log('[i18n] calling updateWaLink');
-window.updateWaLink();
-}
-console.log('[i18n] apply done');
+if (typeof window.updateWaLink === 'function') window.updateWaLink();
 } catch (e) {
 console.error('[i18n] apply error:', e);
 }
 }
 
-// Init on DOM ready
 document.addEventListener('DOMContentLoaded', () => {
-try {
-console.log('[init] DOMContentLoaded');
 const select = document.getElementById('lang');
 const lang = getLang();
 if (select) {
 select.value = lang;
 select.addEventListener('change', () => {
-console.log('[lang] change ->', select.value);
 setLang(select.value);
 applyI18n();
-if (typeof window.renderReviews === 'function') {
-console.log('[lang] rerender reviews');
-window.renderReviews();
-}
+if (typeof window.renderReviews === 'function') window.renderReviews();
 });
 }
 setLang(lang);
 applyI18n();
+
+
 const y = document.getElementById('year');
 if (y && !y.textContent) y.textContent = new Date().getFullYear();
-} catch (e) {
-console.error('[init] error:', e);
-}
 });
 
-// WhatsApp form integration
+// WhatsApp
 (function bookingToWhatsApp() {
 const form = document.getElementById('booking-form');
 const waLink = document.getElementById('wa-link');
 const phone = '255773543109';
-if (!form || !waLink) {
-console.warn('[wa] form or link not found');
-return;
-}
+if (!form || !waLink) return;
 
 
 function buildMessage() {
@@ -284,12 +273,10 @@ function buildMessage() {
   return lines.join('\n');
 }
 
-// Expose globally so i18n can refresh it
 window.updateWaLink = function updateWaLink() {
   try {
     const text = encodeURIComponent(buildMessage());
     waLink.href = `https://wa.me/${phone}?text=${text}`;
-    console.log('[wa] link updated:', waLink.href);
   } catch (e) {
     console.error('[wa] update error:', e);
   }
@@ -301,83 +288,192 @@ form.addEventListener('input', window.updateWaLink);
 form.addEventListener('submit', (e) => {
   e.preventDefault();
   const requiredOk =
-    form.service.value &&
-    form.date.value &&
-    form.time.value &&
-    form.pickup.value &&
-    form.dropoff.value;
+    form.service.value && form.date.value && form.time.value &&
+    form.pickup.value && form.dropoff.value;
   if (!requiredOk) {
     alert(__t('js.alert.required'));
     return;
   }
   window.updateWaLink();
-  console.log('[wa] open link');
   window.open(waLink.href, '_blank', 'noopener');
 });
 })();
 
-// Reviews (local storage)
+// Admin mode (via URL hash) + Reviews + étoiles
 (function reviews() {
 const listEl = document.getElementById('reviews-list');
 const form = document.getElementById('review-form');
 const ratingHidden = document.getElementById('rating-value');
-if (!listEl || !form || !ratingHidden) {
-console.warn('[reviews] elements not found');
-return;
+if (!listEl || !form || !ratingHidden) return;
+
+
+// Admin via hash: #admin=mvita2025!Z@zanzibar
+const ADMIN_HASH_KEY = 'admin';
+const ADMIN_SECRET = 'mvita2025!Z@zanzibar';
+
+function getHashParams() {
+  // Ex: "#admin=xxx&foo=bar"
+  const hash = (location.hash || '').replace(/^#/, '');
+  const params = new URLSearchParams(hash);
+  return params;
+}
+function isAdminMode() {
+  const p = getHashParams();
+  return p.get(ADMIN_HASH_KEY) === ADMIN_SECRET;
 }
 
+// Afficher un badge "Admin" si actif
+function mountAdminBadge() {
+  if (!isAdminMode()) return;
+  if (document.getElementById('admin-badge')) return;
+  const badge = document.createElement('div');
+  badge.id = 'admin-badge';
+  badge.textContent = 'Admin';
+  Object.assign(badge.style, {
+    position: 'fixed',
+    bottom: '16px',
+    right: '16px',
+    zIndex: '9999',
+    padding: '6px 10px',
+    borderRadius: '999px',
+    fontWeight: '800',
+    fontSize: '12px',
+    letterSpacing: '.2px',
+    color: '#075443',
+    background: 'linear-gradient(180deg,#e7fff7,#ffffff)',
+    border: '1px solid #b9efe1',
+    boxShadow: '0 6px 16px rgba(22,160,133,.18)',
+    pointerEvents: 'none',
+    userSelect: 'none',
+  });
+  document.body.appendChild(badge);
+}
+
+// Réagir si le hash change (activation/désactivation admin)
+window.addEventListener('hashchange', () => {
+  // Re-render pour afficher/cacher boutons supprimer
+  window.renderReviews?.();
+  // Gérer badge
+  const existing = document.getElementById('admin-badge');
+  if (isAdminMode()) {
+    if (!existing) mountAdminBadge();
+  } else if (existing) {
+    existing.remove();
+  }
+});
 
 const STORAGE_KEY = 'mvita-reviews-v1';
 
 function getReviews() {
   try { return JSON.parse(localStorage.getItem(STORAGE_KEY)) || []; }
-  catch (e) { console.warn('[reviews] parse error:', e); return []; }
+  catch { return []; }
 }
 function saveReviews(items) {
   localStorage.setItem(STORAGE_KEY, JSON.stringify(items));
 }
 
 window.renderReviews = function renderReviews() {
-  try {
-    const items = getReviews();
-    listEl.innerHTML = '';
-    if (items.length === 0) {
-      const p = document.createElement('p');
-      p.className = 'muted';
-      p.textContent = '—';
-      listEl.appendChild(p);
-      return;
+  const items = getReviews();
+  listEl.innerHTML = '';
+  if (items.length === 0) {
+    const p = document.createElement('p');
+    p.className = 'muted';
+    p.textContent = '—';
+    listEl.appendChild(p);
+    return;
+  }
+  items.forEach((r, idx) => {
+    const div = document.createElement('div');
+    div.className = 'review';
+    const stars = '★'.repeat(r.rating) + '☆'.repeat(5 - r.rating);
+    const date = new Date(r.date);
+    const loc = document.documentElement.lang || 'fr';
+    const formatted = date.toLocaleDateString(loc, { year: 'numeric', month: 'short', day: 'numeric' });
+
+    const header = document.createElement('div');
+    header.innerHTML = `<strong>${r.name}</strong> <span class="stars">${stars}</span>`;
+
+    const meta = document.createElement('div');
+    meta.className = 'meta';
+    meta.textContent = formatted;
+
+    const comment = document.createElement('p');
+    comment.textContent = r.comment;
+
+    div.appendChild(header);
+    div.appendChild(meta);
+    div.appendChild(comment);
+
+    // Bouton Supprimer uniquement en mode admin
+    if (isAdminMode()) {
+      const del = document.createElement('button');
+      del.type = 'button';
+      del.textContent = 'Supprimer';
+      del.className = 'btn outline';
+      del.style.marginTop = '6px';
+      del.addEventListener('click', () => {
+        const confirmMsg = 'Supprimer cet avis ? Cette action est définitive.';
+        if (!confirm(confirmMsg)) return;
+        const current = getReviews();
+        current.splice(idx, 1);
+        saveReviews(current);
+        window.renderReviews();
+      });
+      div.appendChild(del);
     }
-    items.forEach(r => {
-      const div = document.createElement('div');
-      div.className = 'review';
-      const stars = '★'.repeat(r.rating) + '☆'.repeat(5 - r.rating);
-      const date = new Date(r.date);
-      const loc = document.documentElement.lang || 'fr';
-      const formatted = date.toLocaleDateString(loc, { year: 'numeric', month: 'short', day: 'numeric' });
-      div.innerHTML = `
-        <div><strong>${r.name}</strong> <span class="stars">${stars}</span></div>
-        <div class="meta">${formatted}</div>
-        <p>${r.comment}</p>
-      `;
-      listEl.appendChild(div);
-    });
-    console.log('[reviews] rendered:', items.length);
-  } catch (e) {
-    console.error('[reviews] render error:', e);
+
+    listEl.appendChild(div);
+  });
+
+  // Ajouter/retirer le bouton "Réinitialiser tous les avis" selon le mode
+  const existingReset = document.getElementById('reset-reviews-btn');
+  if (isAdminMode()) {
+    if (!existingReset) {
+      const resetBtn = document.createElement('button');
+      resetBtn.type = 'button';
+      resetBtn.id = 'reset-reviews-btn';
+      resetBtn.className = 'btn outline';
+      resetBtn.textContent = 'Réinitialiser tous les avis';
+      resetBtn.style.marginTop = '10px';
+      resetBtn.addEventListener('click', () => {
+        if (!confirm('Supprimer tous les avis ?')) return;
+        localStorage.removeItem(STORAGE_KEY);
+        window.renderReviews();
+      });
+      listEl.parentElement.insertBefore(resetBtn, listEl.nextSibling);
+    }
+  } else if (existingReset) {
+    existingReset.remove();
   }
 };
 
-// Stars selection
-document.querySelectorAll('.stars-input button').forEach(btn => {
+// Etoiles interactives
+const starButtons = Array.from(document.querySelectorAll('.stars-input button'));
+function applyActiveFromValue(val) {
+  const n = Number(val || '0');
+  starButtons.forEach((b) => {
+    const v = Number(b.dataset.value || '0');
+    b.classList.toggle('active', v <= n);
+  });
+}
+applyActiveFromValue(ratingHidden.value || '5');
+
+starButtons.forEach((btn) => {
   btn.addEventListener('click', () => {
     const val = Number(btn.dataset.value || '5');
     ratingHidden.value = String(val);
-    document.querySelectorAll('.stars-input button')
-      .forEach(b => b.classList.toggle('active', b === btn));
+    applyActiveFromValue(val);
+  });
+  btn.addEventListener('mouseenter', () => {
+    const val = Number(btn.dataset.value || '0');
+    applyActiveFromValue(val);
   });
 });
+document.querySelector('.stars-input')?.addEventListener('mouseleave', () => {
+  applyActiveFromValue(ratingHidden.value || '0');
+});
 
+// Envoi avis
 form.addEventListener('submit', (e) => {
   e.preventDefault();
   const name = form.name.value.trim();
@@ -392,12 +488,14 @@ form.addEventListener('submit', (e) => {
   saveReviews(items);
   form.reset();
   ratingHidden.value = '5';
-  document.querySelectorAll('.stars-input button').forEach(b => b.classList.remove('active'));
+  applyActiveFromValue(5);
   window.renderReviews();
   alert(__t('js.review.thanks'));
 });
 
+// Premier rendu + badge si besoin
 window.renderReviews();
+mountAdminBadge();
 })();
 
 })();
