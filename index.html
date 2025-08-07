@@ -150,7 +150,7 @@ footer{padding:26px 0;background:var(--sand);margin-top:34px;border-top:1px soli
   </button>
 </div>
 
-<!-- Panneau mobile (par défaut fermé, animé via .is-open) -->
+<!-- Panneau mobile (fermé par défaut, animé via .is-open) -->
 <div id="nav-panel" class="nav-panel">
   <a href="#about" data-i18n="nav.about">Qui sommes-nous ?</a>
   <a href="#services" data-i18n="nav.services">Services</a>
@@ -297,4 +297,4 @@ footer{padding:26px 0;background:var(--sand);margin-top:34px;border-top:1px soli
     </div>
   </form>
 </section>
-</main> <footer id="contact"> <div class="container foot"> <div>© <span id="year"></span> MVITA Travels</div> <div class="cta"> <a href="https://wa.me/255773543109" target="_blank" rel="noopener" class="btn primary">WhatsApp</a> <span class="muted" data-i18n="footer.location">Zanzibar, Tanzanie</span> </div> </div> </footer> <script src="script.js?v=3" defer></script> <!-- JS de toggle mobile si vous préférez inline (sinon déjà dans script.js) --> <script> document.addEventListener('DOMContentLoaded', () => { const btn = document.querySelector('.nav-toggle'); const panel = document.getElementById('nav-panel'); const langDesktop = document.getElementById('lang'); const langPanel = document.getElementById('lang-panel'); if (!btn || !panel) return; const syncLangToPanel = () => { if (langPanel && langDesktop) langPanel.value = langDesktop.value; }; const syncPanelToDesktop = () => { if (!langPanel || !langDesktop) return; if (langDesktop.value !== langPanel.value) { langDesktop.value = langPanel.value; langDesktop.dispatchEvent(new Event('change')); } }; syncLangToPanel(); langDesktop?.addEventListener('change', syncLangToPanel); langPanel?.addEventListener('change', syncPanelToDesktop); btn.addEventListener('click', () => { const open = panel.classList.toggle('is-open'); btn.setAttribute('aria-expanded', open ? 'true' : 'false'); }); panel.addEventListener('click', (e) => { const a = e.target.closest('a'); if (a) { panel.classList.remove('is-open'); btn.setAttribute('aria-expanded','false'); } }); window.addEventListener('scroll', () => { if (panel.classList.contains('is-open')) { panel.classList.remove('is-open'); btn.setAttribute('aria-expanded','false'); } }, { passive:true }); document.addEventListener('click', (e) => { if (!panel.classList.contains('is-open')) return; const clickInsidePanel = panel.contains(e.target); const clickOnButton = btn.contains(e.target); if (!clickInsidePanel && !clickOnButton) { panel.classList.remove('is-open'); btn.setAttribute('aria-expanded','false'); } }); }); </script> </body> </html>
+</main> <footer id="contact"> <div class="container foot"> <div>© <span id="year"></span> MVITA Travels</div> <div class="cta"> <a href="https://wa.me/255773543109" target="_blank" rel="noopener" class="btn primary">WhatsApp</a> <span class="muted" data-i18n="footer.location">Zanzibar, Tanzanie</span> </div> </div> </footer> <script src="script.js?v=4" defer></script> </body> </html>

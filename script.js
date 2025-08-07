@@ -301,7 +301,7 @@ form.addEventListener('submit', (e) => {
 // Admin mode (via URL hash) + Reviews + étoiles
 (function reviews() {
 const listEl = document.getElementById('reviews-list');
-const form = document.getElementById('review-form');
+aconst form = document.getElementById('review-form');
 const ratingHidden = document.getElementById('rating-value');
 if (!listEl || !form || !ratingHidden) return;
 
@@ -492,47 +492,59 @@ window.renderReviews();
 mountAdminBadge();
 })();
 
-// Menu mobile: toggle + synchro langue (si non inline dans index)
+// Menu mobile: toggle + synchro langue + logs
 document.addEventListener('DOMContentLoaded', () => {
 const btn = document.querySelector('.nav-toggle');
 const panel = document.getElementById('nav-panel');
 const langDesktop = document.getElementById('lang');
 const langPanel = document.getElementById('lang-panel');
+
+
+console.log('[nav] init', { btn: !!btn, panel: !!panel });
+
 if (!btn || !panel) return;
 
-
+// Sync langue
 const syncLangToPanel = () => { if (langPanel && langDesktop) langPanel.value = langDesktop.value; };
 const syncPanelToDesktop = () => {
   if (!langPanel || !langDesktop) return;
   if (langDesktop.value !== langPanel.value) {
     langDesktop.value = langPanel.value;
-    langDesktop.dispatchEvent(new Event('change'));
+    langDesktop.dispatchEvent(new Event('change')); // déclenche i18n
   }
 };
 syncLangToPanel();
 langDesktop?.addEventListener('change', syncLangToPanel);
 langPanel?.addEventListener('change', syncPanelToDesktop);
 
-btn.addEventListener('click', () => {
+// Toggle avec animation
+btn.addEventListener('click', (e) => {
+  e.stopPropagation(); // évite les fermetures immédiates par un handler global
   const open = panel.classList.toggle('is-open');
   btn.setAttribute('aria-expanded', open ? 'true' : 'false');
+  console.log('[nav] toggle ->', open);
 });
 
+// Fermer après clic sur un lien du panneau
 panel.addEventListener('click', (e) => {
   const a = e.target.closest('a');
   if (a) {
     panel.classList.remove('is-open');
     btn.setAttribute('aria-expanded','false');
+    console.log('[nav] close by link');
   }
 });
 
+// Option: fermer au scroll
 window.addEventListener('scroll', () => {
   if (panel.classList.contains('is-open')) {
     panel.classList.remove('is-open');
     btn.setAttribute('aria-expanded','false');
+    console.log('[nav] close by scroll');
   }
 }, { passive:true });
 
+// Option: fermer au clic à l’extérieur
 document.addEventListener('click', (e) => {
   if (!panel.classList.contains('is-open')) return;
   const clickInsidePanel = panel.contains(e.target);
@@ -540,6 +552,7 @@ document.addEventListener('click', (e) => {
   if (!clickInsidePanel && !clickOnButton) {
     panel.classList.remove('is-open');
     btn.setAttribute('aria-expanded','false');
+    console.log('[nav] close by outside click');
   }
 });
 });
