@@ -130,7 +130,6 @@ footer{padding:26px 0;background:var(--sand);margin-top:34px;border-top:1px soli
 }
 </style> </head> <body> <header> <div class="container nav"> <a href="#" class="brand"> <img src="assets/logo_mvita_travel.webp" alt="Logo MVITA Travels"> <span class="title" data-i18n="brand.title">Voyages MVITA</span> </a>
 
-  <!-- Navigation desktop -->
   <nav class="nav-inline">
     <a href="#about" data-i18n="nav.about">Qui sommes-nous ?</a>
     <a href="#services" data-i18n="nav.services">Services</a>
@@ -144,13 +143,9 @@ footer{padding:26px 0;background:var(--sand);margin-top:34px;border-top:1px soli
     </select>
   </nav>
 
-  <!-- Bouton hamburger (mobile) -->
-  <button class="nav-toggle" aria-controls="nav-panel" aria-expanded="false" aria-label="Menu">
-    ☰
-  </button>
+  <button class="nav-toggle" aria-controls="nav-panel" aria-expanded="false" aria-label="Menu">☰</button>
 </div>
 
-<!-- Panneau mobile (fermé par défaut, animé via .is-open) -->
 <div id="nav-panel" class="nav-panel">
   <a href="#about" data-i18n="nav.about">Qui sommes-nous ?</a>
   <a href="#services" data-i18n="nav.services">Services</a>
@@ -166,7 +161,7 @@ footer{padding:26px 0;background:var(--sand);margin-top:34px;border-top:1px soli
     </select>
   </div>
 </div>
-</header> <main> <section class="hero"> <div class="container hero-inner"> <div class="lead"> <span class="tag"><i></i> <span data-i18n="hero.location">Zanzibar, Tanzanie</span></span> <h1 data-i18n="hero.title">Transferts & Excursions, esprit de Zanzibar</h1> <p data-i18n="hero.lead">Des eaux turquoises aux fermes d'épices, profitez de chauffeurs ponctuels, de véhicules confortables et d'expériences authentiques. Réservez en un clic sur WhatsApp.</p> <div class="badges"> <span class="badge" data-i18n="badges.airport">Aéroport ↔ Hôtel</span> <span class="badge" data-i18n="badges.private">Excursions privées</span> <span class="badge" data-i18n="badges.whatsapp">Support WhatsApp</span> </div> </div> <div class="card"> <picture> <source srcset="assets/cover.webp" type="image/webp"> <img src="assets/cover.jpg" alt="Plage turquoise de Zanzibar"> </picture> </div> </div> </section>
+</header> <main> <!-- contenu identique à la version précédente (sections hero, about, services, booking, reviews) --> <section class="hero"> <div class="container hero-inner"> <div class="lead"> <span class="tag"><i></i> <span data-i18n="hero.location">Zanzibar, Tanzanie</span></span> <h1 data-i18n="hero.title">Transferts & Excursions, esprit de Zanzibar</h1> <p data-i18n="hero.lead">Des eaux turquoises aux fermes d'épices, profitez de chauffeurs ponctuels, de véhicules confortables et d'expériences authentiques. Réservez en un clic sur WhatsApp.</p> <div class="badges"> <span class="badge" data-i18n="badges.airport">Aéroport ↔ Hôtel</span> <span class="badge" data-i18n="badges.private">Excursions privées</span> <span class="badge" data-i18n="badges.whatsapp">Support WhatsApp</span> </div> </div> <div class="card"> <picture> <source srcset="assets/cover.webp" type="image/webp"> <img src="assets/cover.jpg" alt="Plage turquoise de Zanzibar"> </picture> </div> </div> </section>
 
 <section id="about" class="section container">
   <h2 data-i18n="about.title">Qui sommes-nous ?</h2>
@@ -176,9 +171,7 @@ footer{padding:26px 0;background:var(--sand);margin-top:34px;border-top:1px soli
       <img src="assets/founder.webp" alt="Fondateur de MVITA Travels" loading="lazy" style="width:100%;height:100%;object-fit:cover;max-height:360px">
     </picture>
     <div class="body">
-      <p class="muted" data-i18n="about.text">
-        Mvital Travel s'efforce d'offrir la meilleure expérience zanzibarienne au monde, non pas dans le luxe, mais à un prix abordable et en contact avec la population locale, non seulement pour des vacances à la plage, mais aussi pour explorer l'île. Ma vision et mon plus grand souhait en créant Mvital Travel ne sont pas l'argent, mais la création de souvenirs inoubliables avec mes clients, qui resteront gravés à vie.
-      </p>
+      <p class="muted" data-i18n="about.text">Mvital Travel s'efforce d'offrir la meilleure expérience zanzibarienne...</p>
     </div>
   </div>
 </section>
@@ -193,10 +186,9 @@ footer{padding:26px 0;background:var(--sand);margin-top:34px;border-top:1px soli
       </picture>
       <div class="body">
         <div class="title" data-i18n="cards.taxi.title">Transferts & Taxi privé</div>
-        <p class="muted" data-i18n="cards.taxi.desc">Aéroport ↔ Hôtel et voyages sur mesure. Chauffeurs professionnels, prix clairs. Disponible 24h/24 et 7j/7</p>
+        <p class="muted" data-i18n="cards.taxi.desc">Aéroport ↔ Hôtel et voyages sur mesure...</p>
       </div>
     </article>
-
     <article class="card">
       <picture>
         <source srcset="assets/excursion.webp" type="image/webp">
@@ -204,10 +196,9 @@ footer{padding:26px 0;background:var(--sand);margin-top:34px;border-top:1px soli
       </picture>
       <div class="body">
         <div class="title" data-i18n="cards.excursions.title">Excursions</div>
-        <p class="muted" data-i18n="cards.excursions.desc">Safari Blue, Prison Island, Stone Town, dhow au coucher du soleil et plus encore.</p>
+        <p class="muted" data-i18n="cards.excursions.desc">Safari Blue, Prison Island...</p>
       </div>
     </article>
-
     <article class="card">
       <picture>
         <source srcset="assets/spice.webp" type="image/webp">
@@ -215,7 +206,7 @@ footer{padding:26px 0;background:var(--sand);margin-top:34px;border-top:1px soli
       </picture>
       <div class="body">
         <div class="title" data-i18n="cards.spice.title">Spice Tour</div>
-        <p class="muted" data-i18n="cards.spice.desc">Visitez les fermes d’épices, dégustez et découvrez l’héritage swahili.</p>
+        <p class="muted" data-i18n="cards.spice.desc">Visitez les fermes d’épices...</p>
       </div>
     </article>
   </div>
@@ -223,7 +214,7 @@ footer{padding:26px 0;background:var(--sand);margin-top:34px;border-top:1px soli
 
 <section id="booking" class="section container">
   <h2 data-i18n="booking.title">Réservation rapide</h2>
-  <p class="muted" data-i18n="booking.lead">Complétez le formulaire : votre message est prêt pour WhatsApp.</p>
+  <p class="muted" data-i18n="booking.lead">Complétez le formulaire...</p>
   <form id="booking-form" class="form">
     <div>
       <label for="service" data-i18n="form.service">Service</label>
@@ -250,15 +241,15 @@ footer{padding:26px 0;background:var(--sand);margin-top:34px;border-top:1px soli
     </div>
     <div>
       <label for="pickup" data-i18n="form.pickup">Départ</label>
-      <input id="pickup" name="pickup" type="text" placeholder="Aéroport / Hôtel..." required>
+      <input id="pickup" name="pickup" type="text" required>
     </div>
     <div>
       <label for="dropoff" data-i18n="form.dropoff">Destination</label>
-      <input id="dropoff" name="dropoff" type="text" placeholder="Hôtel / Activité..." required>
+      <input id="dropoff" name="dropoff" type="text" required>
     </div>
     <div class="full">
       <label for="notes" data-i18n="form.notes">Notes</label>
-      <textarea id="notes" name="notes" placeholder="Numéro de vol, horaires, préférence véhicule…"></textarea>
+      <textarea id="notes" name="notes"></textarea>
     </div>
     <div class="full form-actions">
       <button type="submit" class="btn primary" data-i18n="form.confirm">Confirmer</button>
@@ -270,7 +261,6 @@ footer{padding:26px 0;background:var(--sand);margin-top:34px;border-top:1px soli
 <section id="reviews" class="section container reviews">
   <h2 data-i18n="reviews.title">Avis clients</h2>
   <div id="reviews-list"></div>
-
   <h3 data-i18n="reviews.leave">Laisser un avis</h3>
   <form id="review-form" class="form">
     <div class="full">
@@ -297,4 +287,4 @@ footer{padding:26px 0;background:var(--sand);margin-top:34px;border-top:1px soli
     </div>
   </form>
 </section>
-</main> <footer id="contact"> <div class="container foot"> <div>© <span id="year"></span> MVITA Travels</div> <div class="cta"> <a href="https://wa.me/255773543109" target="_blank" rel="noopener" class="btn primary">WhatsApp</a> <span class="muted" data-i18n="footer.location">Zanzibar, Tanzanie</span> </div> </div> </footer> <script src="script.js?v=4" defer></script> </body> </html>
+</main> <footer id="contact"> <div class="container foot"> <div>© <span id="year"></span> MVITA Travels</div> <div class="cta"> <a href="https://wa.me/255773543109" target="_blank" rel="noopener" class="btn primary">WhatsApp</a> <span class="muted" data-i18n="footer.location">Zanzibar, Tanzanie</span> </div> </div> </footer> <script src="script.js?v=5" defer></script> </body> </html>

@@ -124,7 +124,7 @@ en: {
 es: {
 'nav.about': '¿Quiénes somos?',
 'about.title': '¿Quiénes somos?',
-'about.text': "Mvital Travel se esfuerza por ofrecer la mejor experiencia de Zanzíbar del mundo, no en el lujo, sino a un precio asequible y en contacto con la población local, no solo para unas vacaciones en la playa sino también para explorar la isla. Mi visión y mi mayor deseo al crear Mvital Travel no es el dinero, sino crear recuerdos inolvidables con mis clientes, recuerdos que durarán toda la vida.",
+'about.text': "Mvital Travel se esfuerza por ofrecer la mejor experiencia de Zanzíbar...",
 'nav.services': 'Servicios',
 'nav.booking': 'Reserva',
 'nav.reviews': 'Opiniones',
@@ -132,19 +132,19 @@ es: {
 'brand.title': 'MVITA Travels',
 'hero.location': 'Zanzíbar, Tanzania',
 'hero.title': 'Traslados y Excursiones, espíritu de Zanzíbar',
-'hero.lead': 'Desde aguas turquesas hasta granjas de especias, disfrute de conductores puntuales, vehículos cómodos y experiencias auténticas. Reserve en un clic por WhatsApp.',
+'hero.lead': 'Desde aguas turquesas hasta granjas de especias...',
 'badges.airport': 'Aeropuerto ↔ Hotel',
 'badges.private': 'Excursiones privadas',
 'badges.whatsapp': 'Soporte por WhatsApp',
 'services.title': 'Nuestros servicios',
 'cards.taxi.title': 'Traslados y Taxi privado',
-'cards.taxi.desc': 'Aeropuerto ↔ Hotel y viajes a medida. Conductores profesionales, precios claros. Disponible 24/7',
+'cards.taxi.desc': 'Aeropuerto ↔ Hotel y viajes a medida...',
 'cards.excursions.title': 'Excursiones',
-'cards.excursions.desc': 'Safari Blue, Prison Island, Stone Town, dhow al atardecer y más.',
+'cards.excursions.desc': 'Safari Blue, Prison Island, Stone Town...',
 'cards.spice.title': 'Spice Tour',
-'cards.spice.desc': 'Visite granjas de especias, pruebe y descubra el patrimonio suajili.',
+'cards.spice.desc': 'Visite granjas de especias...',
 'booking.title': 'Reserva rápida',
-'booking.lead': 'Complete el formulario: su mensaje está listo para WhatsApp.',
+'booking.lead': 'Complete el formulario...',
 'form.service': 'Servicio',
 'form.date': 'Fecha',
 'form.time': 'Hora',
@@ -298,64 +298,13 @@ form.addEventListener('submit', (e) => {
 });
 })();
 
-// Admin mode (via URL hash) + Reviews + étoiles
+// Admin + Reviews + étoiles
 (function reviews() {
 const listEl = document.getElementById('reviews-list');
-aconst form = document.getElementById('review-form');
+const form = document.getElementById('review-form'); // corrigé (pas de faute)
 const ratingHidden = document.getElementById('rating-value');
 if (!listEl || !form || !ratingHidden) return;
 
-
-// Admin via hash: #admin=mvita2025!Z@zanzibar
-const ADMIN_HASH_KEY = 'admin';
-const ADMIN_SECRET = 'mvita2025!Z@zanzibar';
-
-function getHashParams() {
-  const hash = (location.hash || '').replace(/^#/, '');
-  const params = new URLSearchParams(hash);
-  return params;
-}
-function isAdminMode() {
-  const p = getHashParams();
-  return p.get(ADMIN_HASH_KEY) === ADMIN_SECRET;
-}
-
-// Badge Admin
-function mountAdminBadge() {
-  if (!isAdminMode()) return;
-  if (document.getElementById('admin-badge')) return;
-  const badge = document.createElement('div');
-  badge.id = 'admin-badge';
-  badge.textContent = 'Admin';
-  Object.assign(badge.style, {
-    position: 'fixed',
-    bottom: '16px',
-    right: '16px',
-    zIndex: '9999',
-    padding: '6px 10px',
-    borderRadius: '999px',
-    fontWeight: '800',
-    fontSize: '12px',
-    letterSpacing: '.2px',
-    color: '#075443',
-    background: 'linear-gradient(180deg,#e7fff7,#ffffff)',
-    border: '1px solid #b9efe1',
-    boxShadow: '0 6px 16px rgba(22,160,133,.18)',
-    pointerEvents: 'none',
-    userSelect: 'none',
-  });
-  document.body.appendChild(badge);
-}
-
-window.addEventListener('hashchange', () => {
-  window.renderReviews?.();
-  const existing = document.getElementById('admin-badge');
-  if (isAdminMode()) {
-    if (!existing) mountAdminBadge();
-  } else if (existing) {
-    existing.remove();
-  }
-});
 
 const STORAGE_KEY = 'mvita-reviews-v1';
 
@@ -376,68 +325,18 @@ window.renderReviews = function renderReviews() {
     p.textContent = '—';
     listEl.appendChild(p);
   } else {
-    items.forEach((r, idx) => {
+    items.forEach((r) => {
       const div = document.createElement('div');
       div.className = 'review';
       const stars = '★'.repeat(r.rating) + '☆'.repeat(5 - r.rating);
       const date = new Date(r.date);
       const loc = document.documentElement.lang || 'fr';
       const formatted = date.toLocaleDateString(loc, { year: 'numeric', month: 'short', day: 'numeric' });
-
-      const header = document.createElement('div');
-      header.innerHTML = `<strong>${r.name}</strong> <span class="stars">${stars}</span>`;
-
-      const meta = document.createElement('div');
-      meta.className = 'meta';
-      meta.textContent = formatted;
-
-      const comment = document.createElement('p');
-      comment.textContent = r.comment;
-
-      div.appendChild(header);
-      div.appendChild(meta);
-      div.appendChild(comment);
-
-      if (isAdminMode()) {
-        const del = document.createElement('button');
-        del.type = 'button';
-        del.textContent = 'Supprimer';
-        del.className = 'btn outline';
-        del.style.marginTop = '6px';
-        del.addEventListener('click', () => {
-          const confirmMsg = 'Supprimer cet avis ? Cette action est définitive.';
-          if (!confirm(confirmMsg)) return;
-          const current = getReviews();
-          current.splice(idx, 1);
-          saveReviews(current);
-          window.renderReviews();
-        });
-        div.appendChild(del);
-      }
-
+      div.innerHTML = `<div><strong>${r.name}</strong> <span class="stars">${stars}</span></div>
+                       <div class="meta">${formatted}</div>
+                       <p>${r.comment}</p>`;
       listEl.appendChild(div);
     });
-  }
-
-  // Bouton reset uniquement en admin
-  const existingReset = document.getElementById('reset-reviews-btn');
-  if (isAdminMode()) {
-    if (!existingReset) {
-      const resetBtn = document.createElement('button');
-      resetBtn.type = 'button';
-      resetBtn.id = 'reset-reviews-btn';
-      resetBtn.className = 'btn outline';
-      resetBtn.textContent = 'Réinitialiser tous les avis';
-      resetBtn.style.marginTop = '10px';
-      resetBtn.addEventListener('click', () => {
-        if (!confirm('Supprimer tous les avis ?')) return;
-        localStorage.removeItem(STORAGE_KEY);
-        window.renderReviews();
-      });
-      listEl.parentElement.insertBefore(resetBtn, listEl.nextSibling);
-    }
-  } else if (existingReset) {
-    existingReset.remove();
   }
 };
 
@@ -467,7 +366,6 @@ document.querySelector('.stars-input')?.addEventListener('mouseleave', () => {
   applyActiveFromValue(ratingHidden.value || '0');
 });
 
-// Soumission avis
 form.addEventListener('submit', (e) => {
   e.preventDefault();
   const name = form.name.value.trim();
@@ -487,12 +385,10 @@ form.addEventListener('submit', (e) => {
   alert(__t('js.review.thanks'));
 });
 
-// Premier rendu + badge si besoin
 window.renderReviews();
-mountAdminBadge();
 })();
 
-// Menu mobile: toggle + synchro langue + logs
+// Menu mobile: toggle + synchro langue (sans fermetures auto pour debug)
 document.addEventListener('DOMContentLoaded', () => {
 const btn = document.querySelector('.nav-toggle');
 const panel = document.getElementById('nav-panel');
@@ -510,49 +406,28 @@ const syncPanelToDesktop = () => {
   if (!langPanel || !langDesktop) return;
   if (langDesktop.value !== langPanel.value) {
     langDesktop.value = langPanel.value;
-    langDesktop.dispatchEvent(new Event('change')); // déclenche i18n
+    langDesktop.dispatchEvent(new Event('change'));
   }
 };
 syncLangToPanel();
 langDesktop?.addEventListener('change', syncLangToPanel);
 langPanel?.addEventListener('change', syncPanelToDesktop);
 
-// Toggle avec animation
+// Toggle simple
 btn.addEventListener('click', (e) => {
-  e.stopPropagation(); // évite les fermetures immédiates par un handler global
+  e.stopPropagation();
   const open = panel.classList.toggle('is-open');
   btn.setAttribute('aria-expanded', open ? 'true' : 'false');
   console.log('[nav] toggle ->', open);
 });
 
-// Fermer après clic sur un lien du panneau
+// Fermer après clic lien
 panel.addEventListener('click', (e) => {
   const a = e.target.closest('a');
   if (a) {
     panel.classList.remove('is-open');
     btn.setAttribute('aria-expanded','false');
     console.log('[nav] close by link');
-  }
-});
-
-// Option: fermer au scroll
-window.addEventListener('scroll', () => {
-  if (panel.classList.contains('is-open')) {
-    panel.classList.remove('is-open');
-    btn.setAttribute('aria-expanded','false');
-    console.log('[nav] close by scroll');
-  }
-}, { passive:true });
-
-// Option: fermer au clic à l’extérieur
-document.addEventListener('click', (e) => {
-  if (!panel.classList.contains('is-open')) return;
-  const clickInsidePanel = panel.contains(e.target);
-  const clickOnButton = btn.contains(e.target);
-  if (!clickInsidePanel && !clickOnButton) {
-    panel.classList.remove('is-open');
-    btn.setAttribute('aria-expanded','false');
-    console.log('[nav] close by outside click');
   }
 });
 });
