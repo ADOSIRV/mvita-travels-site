@@ -13,25 +13,16 @@ header{
 .nav a{padding:6px 10px;border-radius:10px;color:var(--ink);font-weight:600;white-space:nowrap}
 .nav a:hover{background:rgba(26,188,156,.08)}
 
-/* Barre menus desktop à une seule ligne + sélecteur compact */
+/* Barre menus desktop + sélecteur */
 .nav-inline{
-  display:flex;
-  align-items:center;
-  gap:8px;
-  flex-wrap:nowrap;   /* desktop: une ligne */
-  overflow:hidden;
+  display:flex; align-items:center; gap:8px;
+  flex-wrap:nowrap; overflow:hidden;
 }
 .nav select,
 #lang-panel{
-  padding:6px 8px;
-  height:34px;
-  line-height:1;
-  border-radius:10px;
-  border:1px solid #d9e7e4;
-  background:#fff;
-  font-weight:700;
-  color:var(--ink);
-  font-size:13px;
+  padding:6px 8px; height:34px; line-height:1;
+  border-radius:10px; border:1px solid #d9e7e4; background:#fff;
+  font-weight:700; color:var(--ink); font-size:13px;
 }
 .nav select option{font-size:14px}
 
@@ -42,12 +33,17 @@ header{
   padding:8px 10px;font:inherit;font-weight:800;color:var(--ink);
 }
 
-/* Panneau mobile */
+/* Panneau mobile (animé) */
 .nav-panel{
   position:fixed;top:68px;left:0;right:0;z-index:60;
   background:#fff;border-bottom:1px solid #eef2f1;
   box-shadow:0 10px 24px rgba(0,0,0,.06);
   display:flex;flex-direction:column;gap:4px;padding:10px 16px;
+
+  transform: translateY(-8px);
+  opacity: 0;
+  visibility: hidden;
+  transition: transform .22s ease, opacity .22s ease, visibility 0s linear .22s;
 }
 .nav-panel a{padding:10px 8px;border-radius:10px;font-weight:700;color:var(--ink)}
 .nav-panel a:hover{background:rgba(26,188,156,.08)}
@@ -55,6 +51,12 @@ header{
 .nav-panel select{
   width:100%;padding:8px 10px;border:1px solid #d9e7e4;border-radius:10px;
   background:#fff;font-weight:700;color:var(--ink)
+}
+.nav-panel.is-open{
+  transform: translateY(0);
+  opacity: 1;
+  visibility: visible;
+  transition: transform .22s ease, opacity .22s ease, visibility 0s;
 }
 
 .hero{background:linear-gradient(180deg,var(--sand),#ffffff 60%);padding:46px 0}
@@ -100,7 +102,7 @@ textarea{min-height:100px;resize:vertical;background:linear-gradient(#ffffff,#ff
 .stars{color:#f59e0b;margin-left:6px}
 .meta{color:#667085;font-size:14px}
 
-/* Etoiles interactives: nécessaire pour la couleur et l’animation */
+/* Etoiles interactives */
 .stars-input{display:inline-flex;gap:6px}
 .stars-input button{
   background:transparent;border:none;padding:0;font-size:24px;line-height:1;
@@ -116,14 +118,13 @@ footer{padding:26px 0;background:var(--sand);margin-top:34px;border-top:1px soli
 @media (max-width:900px){
   .hero-inner{grid-template-columns:1fr}
   .grid{grid-template-columns:1fr 1fr}
-  .nav-inline{display:none}   /* cacher la nav desktop */
+  .nav-inline{display:none}
   .nav-toggle{display:inline-flex}
 }
 @media (max-width:640px){
   .grid{grid-template-columns:1fr}
   .form{grid-template-columns:1fr}
 }
-/* Desktop: panneau mobile caché */
 @media (min-width:901px){
   .nav-panel{display:none !important}
 }
@@ -149,8 +150,8 @@ footer{padding:26px 0;background:var(--sand);margin-top:34px;border-top:1px soli
   </button>
 </div>
 
-<!-- Panneau mobile -->
-<div id="nav-panel" class="nav-panel" hidden>
+<!-- Panneau mobile (par défaut fermé, animé via .is-open) -->
+<div id="nav-panel" class="nav-panel">
   <a href="#about" data-i18n="nav.about">Qui sommes-nous ?</a>
   <a href="#services" data-i18n="nav.services">Services</a>
   <a href="#booking" data-i18n="nav.booking">Réservation</a>
@@ -167,7 +168,6 @@ footer{padding:26px 0;background:var(--sand);margin-top:34px;border-top:1px soli
 </div>
 </header> <main> <section class="hero"> <div class="container hero-inner"> <div class="lead"> <span class="tag"><i></i> <span data-i18n="hero.location">Zanzibar, Tanzanie</span></span> <h1 data-i18n="hero.title">Transferts & Excursions, esprit de Zanzibar</h1> <p data-i18n="hero.lead">Des eaux turquoises aux fermes d'épices, profitez de chauffeurs ponctuels, de véhicules confortables et d'expériences authentiques. Réservez en un clic sur WhatsApp.</p> <div class="badges"> <span class="badge" data-i18n="badges.airport">Aéroport ↔ Hôtel</span> <span class="badge" data-i18n="badges.private">Excursions privées</span> <span class="badge" data-i18n="badges.whatsapp">Support WhatsApp</span> </div> </div> <div class="card"> <picture> <source srcset="assets/cover.webp" type="image/webp"> <img src="assets/cover.jpg" alt="Plage turquoise de Zanzibar"> </picture> </div> </div> </section>
 
-<!-- Section Qui sommes-nous ? -->
 <section id="about" class="section container">
   <h2 data-i18n="about.title">Qui sommes-nous ?</h2>
   <div class="card" style="display:grid;grid-template-columns:1fr 1.6fr;gap:16px;align-items:center;overflow:hidden">
@@ -297,4 +297,4 @@ footer{padding:26px 0;background:var(--sand);margin-top:34px;border-top:1px soli
     </div>
   </form>
 </section>
-</main> <footer id="contact"> <div class="container foot"> <div>© <span id="year"></span> MVITA Travels</div> <div class="cta"> <a href="https://wa.me/255773543109" target="_blank" rel="noopener" class="btn primary">WhatsApp</a> <span class="muted" data-i18n="footer.location">Zanzibar, Tanzanie</span> </div> </div> </footer> <script src="script.js?v=debug2" defer></script> <script> // Nav mobile: toggle + synchro langue avec i18n existant document.addEventListener('DOMContentLoaded', () => { const btn = document.querySelector('.nav-toggle'); const panel = document.getElementById('nav-panel'); const langDesktop = document.getElementById('lang'); const langPanel = document.getElementById('lang-panel'); if (!btn || !panel) return; const syncLangToPanel = () => { if (langPanel && langDesktop) langPanel.value = langDesktop.value; }; const syncPanelToDesktop = () => { if (!langPanel || !langDesktop) return; if (langDesktop.value !== langPanel.value) { langDesktop.value = langPanel.value; // Déclenche la logique i18n existante du select desktop langDesktop.dispatchEvent(new Event('change')); } }; syncLangToPanel(); btn.addEventListener('click', () => { const willOpen = panel.hasAttribute('hidden'); if (willOpen) { panel.removeAttribute('hidden'); btn.setAttribute('aria-expanded', 'true'); } else { panel.setAttribute('hidden', ''); btn.setAttribute('aria-expanded', 'false'); } }); // Ferme le panneau sur clic lien panel.addEventListener('click', (e) => { const a = e.target.closest('a'); if (a) { panel.setAttribute('hidden',''); btn.setAttribute('aria-expanded','false'); } }); // Changement de langue via le panneau langPanel?.addEventListener('change', () => { syncPanelToDesktop(); }); // Si la langue est changée côté desktop, synchroniser le panneau langDesktop?.addEventListener('change', () => { syncLangToPanel(); }); }); </script> </body> </html>
+</main> <footer id="contact"> <div class="container foot"> <div>© <span id="year"></span> MVITA Travels</div> <div class="cta"> <a href="https://wa.me/255773543109" target="_blank" rel="noopener" class="btn primary">WhatsApp</a> <span class="muted" data-i18n="footer.location">Zanzibar, Tanzanie</span> </div> </div> </footer> <script src="script.js?v=3" defer></script> <!-- JS de toggle mobile si vous préférez inline (sinon déjà dans script.js) --> <script> document.addEventListener('DOMContentLoaded', () => { const btn = document.querySelector('.nav-toggle'); const panel = document.getElementById('nav-panel'); const langDesktop = document.getElementById('lang'); const langPanel = document.getElementById('lang-panel'); if (!btn || !panel) return; const syncLangToPanel = () => { if (langPanel && langDesktop) langPanel.value = langDesktop.value; }; const syncPanelToDesktop = () => { if (!langPanel || !langDesktop) return; if (langDesktop.value !== langPanel.value) { langDesktop.value = langPanel.value; langDesktop.dispatchEvent(new Event('change')); } }; syncLangToPanel(); langDesktop?.addEventListener('change', syncLangToPanel); langPanel?.addEventListener('change', syncPanelToDesktop); btn.addEventListener('click', () => { const open = panel.classList.toggle('is-open'); btn.setAttribute('aria-expanded', open ? 'true' : 'false'); }); panel.addEventListener('click', (e) => { const a = e.target.closest('a'); if (a) { panel.classList.remove('is-open'); btn.setAttribute('aria-expanded','false'); } }); window.addEventListener('scroll', () => { if (panel.classList.contains('is-open')) { panel.classList.remove('is-open'); btn.setAttribute('aria-expanded','false'); } }, { passive:true }); document.addEventListener('click', (e) => { if (!panel.classList.contains('is-open')) return; const clickInsidePanel = panel.contains(e.target); const clickOnButton = btn.contains(e.target); if (!clickInsidePanel && !clickOnButton) { panel.classList.remove('is-open'); btn.setAttribute('aria-expanded','false'); } }); }); </script> </body> </html>

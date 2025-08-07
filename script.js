@@ -201,8 +201,7 @@ function applyI18n() {
 try {
 document.querySelectorAll('[data-i18n]').forEach(el => {
 const key = el.getAttribute('data-i18n');
-const value = t(key);
-el.textContent = value;
+el.textContent = t(key);
 });
 const optMap = {
 'form.opt.transfer': '#service option:nth-child(1)',
@@ -312,7 +311,6 @@ const ADMIN_HASH_KEY = 'admin';
 const ADMIN_SECRET = 'mvita2025!Z@zanzibar';
 
 function getHashParams() {
-  // Ex: "#admin=xxx&foo=bar"
   const hash = (location.hash || '').replace(/^#/, '');
   const params = new URLSearchParams(hash);
   return params;
@@ -322,7 +320,7 @@ function isAdminMode() {
   return p.get(ADMIN_HASH_KEY) === ADMIN_SECRET;
 }
 
-// Afficher un badge "Admin" si actif
+// Badge Admin
 function mountAdminBadge() {
   if (!isAdminMode()) return;
   if (document.getElementById('admin-badge')) return;
@@ -349,11 +347,8 @@ function mountAdminBadge() {
   document.body.appendChild(badge);
 }
 
-// Réagir si le hash change (activation/désactivation admin)
 window.addEventListener('hashchange', () => {
-  // Re-render pour afficher/cacher boutons supprimer
   window.renderReviews?.();
-  // Gérer badge
   const existing = document.getElementById('admin-badge');
   if (isAdminMode()) {
     if (!existing) mountAdminBadge();
@@ -380,52 +375,51 @@ window.renderReviews = function renderReviews() {
     p.className = 'muted';
     p.textContent = '—';
     listEl.appendChild(p);
-    return;
+  } else {
+    items.forEach((r, idx) => {
+      const div = document.createElement('div');
+      div.className = 'review';
+      const stars = '★'.repeat(r.rating) + '☆'.repeat(5 - r.rating);
+      const date = new Date(r.date);
+      const loc = document.documentElement.lang || 'fr';
+      const formatted = date.toLocaleDateString(loc, { year: 'numeric', month: 'short', day: 'numeric' });
+
+      const header = document.createElement('div');
+      header.innerHTML = `<strong>${r.name}</strong> <span class="stars">${stars}</span>`;
+
+      const meta = document.createElement('div');
+      meta.className = 'meta';
+      meta.textContent = formatted;
+
+      const comment = document.createElement('p');
+      comment.textContent = r.comment;
+
+      div.appendChild(header);
+      div.appendChild(meta);
+      div.appendChild(comment);
+
+      if (isAdminMode()) {
+        const del = document.createElement('button');
+        del.type = 'button';
+        del.textContent = 'Supprimer';
+        del.className = 'btn outline';
+        del.style.marginTop = '6px';
+        del.addEventListener('click', () => {
+          const confirmMsg = 'Supprimer cet avis ? Cette action est définitive.';
+          if (!confirm(confirmMsg)) return;
+          const current = getReviews();
+          current.splice(idx, 1);
+          saveReviews(current);
+          window.renderReviews();
+        });
+        div.appendChild(del);
+      }
+
+      listEl.appendChild(div);
+    });
   }
-  items.forEach((r, idx) => {
-    const div = document.createElement('div');
-    div.className = 'review';
-    const stars = '★'.repeat(r.rating) + '☆'.repeat(5 - r.rating);
-    const date = new Date(r.date);
-    const loc = document.documentElement.lang || 'fr';
-    const formatted = date.toLocaleDateString(loc, { year: 'numeric', month: 'short', day: 'numeric' });
 
-    const header = document.createElement('div');
-    header.innerHTML = `<strong>${r.name}</strong> <span class="stars">${stars}</span>`;
-
-    const meta = document.createElement('div');
-    meta.className = 'meta';
-    meta.textContent = formatted;
-
-    const comment = document.createElement('p');
-    comment.textContent = r.comment;
-
-    div.appendChild(header);
-    div.appendChild(meta);
-    div.appendChild(comment);
-
-    // Bouton Supprimer uniquement en mode admin
-    if (isAdminMode()) {
-      const del = document.createElement('button');
-      del.type = 'button';
-      del.textContent = 'Supprimer';
-      del.className = 'btn outline';
-      del.style.marginTop = '6px';
-      del.addEventListener('click', () => {
-        const confirmMsg = 'Supprimer cet avis ? Cette action est définitive.';
-        if (!confirm(confirmMsg)) return;
-        const current = getReviews();
-        current.splice(idx, 1);
-        saveReviews(current);
-        window.renderReviews();
-      });
-      div.appendChild(del);
-    }
-
-    listEl.appendChild(div);
-  });
-
-  // Ajouter/retirer le bouton "Réinitialiser tous les avis" selon le mode
+  // Bouton reset uniquement en admin
   const existingReset = document.getElementById('reset-reviews-btn');
   if (isAdminMode()) {
     if (!existingReset) {
@@ -473,7 +467,7 @@ document.querySelector('.stars-input')?.addEventListener('mouseleave', () => {
   applyActiveFromValue(ratingHidden.value || '0');
 });
 
-// Envoi avis
+// Soumission avis
 form.addEventListener('submit', (e) => {
   e.preventDefault();
   const name = form.name.value.trim();
@@ -497,5 +491,57 @@ form.addEventListener('submit', (e) => {
 window.renderReviews();
 mountAdminBadge();
 })();
+
+// Menu mobile: toggle + synchro langue (si non inline dans index)
+document.addEventListener('DOMContentLoaded', () => {
+const btn = document.querySelector('.nav-toggle');
+const panel = document.getElementById('nav-panel');
+const langDesktop = document.getElementById('lang');
+const langPanel = document.getElementById('lang-panel');
+if (!btn || !panel) return;
+
+
+const syncLangToPanel = () => { if (langPanel && langDesktop) langPanel.value = langDesktop.value; };
+const syncPanelToDesktop = () => {
+  if (!langPanel || !langDesktop) return;
+  if (langDesktop.value !== langPanel.value) {
+    langDesktop.value = langPanel.value;
+    langDesktop.dispatchEvent(new Event('change'));
+  }
+};
+syncLangToPanel();
+langDesktop?.addEventListener('change', syncLangToPanel);
+langPanel?.addEventListener('change', syncPanelToDesktop);
+
+btn.addEventListener('click', () => {
+  const open = panel.classList.toggle('is-open');
+  btn.setAttribute('aria-expanded', open ? 'true' : 'false');
+});
+
+panel.addEventListener('click', (e) => {
+  const a = e.target.closest('a');
+  if (a) {
+    panel.classList.remove('is-open');
+    btn.setAttribute('aria-expanded','false');
+  }
+});
+
+window.addEventListener('scroll', () => {
+  if (panel.classList.contains('is-open')) {
+    panel.classList.remove('is-open');
+    btn.setAttribute('aria-expanded','false');
+  }
+}, { passive:true });
+
+document.addEventListener('click', (e) => {
+  if (!panel.classList.contains('is-open')) return;
+  const clickInsidePanel = panel.contains(e.target);
+  const clickOnButton = btn.contains(e.target);
+  if (!clickInsidePanel && !clickOnButton) {
+    panel.classList.remove('is-open');
+    btn.setAttribute('aria-expanded','false');
+  }
+});
+});
 
 })();
